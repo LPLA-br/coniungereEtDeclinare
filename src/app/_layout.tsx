@@ -9,9 +9,9 @@ export default function HomeLayout()
   return (
     <>
       <SafeAreaView>
-        <Cabecalho className={'cabecalho'} texto={"CONIUNGERE ET DECLINARE"} />
+        <Cabecalho className="cabecalho" texto={"CONIUNGERE ET DECLINARE"} />
         <Slot />
-        <Rodape className={'rodape'} />
+        <Rodape className="rodape" />
       </SafeAreaView>
     </>
   );

@@ -4,7 +4,7 @@
  * */
 
 import React from "react";
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { StyleSheet } from "react-native";
 import TextBiInput from "../sub-componentes/TextBiInput";
 

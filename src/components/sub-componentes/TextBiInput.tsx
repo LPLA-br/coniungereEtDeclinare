@@ -7,13 +7,18 @@ import React from "react";
 import { View, TextInput, Text } from "react-native";
 import { StyleSheet } from "react-native";
 
+type LocalProps =
+{
+  caso: string
+};
+
 /**
  *  Sub-Componente de input singular e plural
  *  para caso gramatical. Id da View mais externa
  *  contém "caso".
  *  @param {caso:string}
  * */
-export default function TextBiInput(props)
+export default function TextBiInput( props: LocalProps )
 {
   return (
     <View id={props.caso}>
