@@ -5,26 +5,26 @@ const estilos = StyleSheet.create(
 {
   viewPrincipal:
   {
-    maxWidth: '30em',
+    maxWidth: 30,
   },
   container:
   {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignContent: 'justifyContent',
+    alignContent: 'space-between',
     flexWrap: 'nowrap',
   },
   botao:
   {
     backgroundColor: '#a0a0a0',
     borderColor: 'black',
-    borderWidth: '1px'
+    borderWidth: 1
   },
   exibirBorda:
   {
     borderColor: 'green',
-    borderWidth: '1px'
+    borderWidth: 1
   }
 });
 
