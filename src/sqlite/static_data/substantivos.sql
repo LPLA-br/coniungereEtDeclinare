@@ -3,14 +3,14 @@
 
 CREATE TABLE IF NOT EXISTS substantivos
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   genero CHAR,
-  declinacao INT,
+  caso INT,
   nomS TEXT, genS TEXT, datS TEXT, acuS TEXT, ablS TEXT, locS TEXT, vocS TEXT,
   nomP TEXT, genP TEXT, datP TEXT, acuP TEXT, ablP TEXT, locP TEXT, vocP TEXT,
   CONSTRAINT chave_primaria PRIMARY_KEY( id ),
   CONSTRAINT genero CHECK ( genero = 'f' || genero = 'm' || genero = 'n' ),
-  CONSTRAINT declinacao CHECK ( declinacao > 0 && declinacao < 6 )
+  CONSTRAINT caso CHECK ( caso > 0 && caso < 6 )
 );
 
 -- substantivos selecionados de acordo com suas caracteristicas

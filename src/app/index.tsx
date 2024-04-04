@@ -23,6 +23,8 @@ export default function Page()
           <Pressable style={estilos.botao}>
             <Text> Sair </Text>
           </Pressable>
+
+          <Link href={"/subparte"}><Pressable><Text> calculadora </Text></Pressable></Link>
         </View>
       </View>
   );

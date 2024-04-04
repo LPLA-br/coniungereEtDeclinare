@@ -6,7 +6,7 @@
 --conjugação para número e pessoa
 CREATE TABLE IF NOT EXISTS pessoas
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   pri_sing TEXT,
   seg_sing TEXT,
@@ -21,18 +21,23 @@ CREATE TABLE IF NOT EXISTS pessoas
 -- MODOS
 CREATE TABLE infinitivos
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
+  voz TEXT,
   praesens  TEXT,
   perfectum TEXT,
   futurum   TEXT,
 
-  CONSTRAINT pk_infinit PRIMARY KEY( id )
+  CONSTRAINT pk_infinit PRIMARY KEY( id ),
+  CONSTRAINT inf_voz CHECK (
+    voz = 'a' ||
+    voz = 'p'
+  )
 );
 
 CREATE TABLE indicativos
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   praesens INTEGER,
   imperfectum INTEGER,
@@ -52,7 +57,7 @@ CREATE TABLE indicativos
 
 CREATE TABLE subjuntivos(
 
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   praesens INTEGER,
   imperfectum INTEGER,
@@ -69,7 +74,7 @@ CREATE TABLE subjuntivos(
 CREATE TABLE imperativos
 (
 
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   praesens_sing TEXT,
   futurum_sing  TEXT,
@@ -84,7 +89,7 @@ CREATE TABLE imperativos
 -- NOTA perfectum participará dos ativos
 CREATE TABLE participios
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   --ativo
   praesens  TEXT,
   futurum   TEXT,
@@ -96,7 +101,7 @@ CREATE TABLE participios
 
 CREATE TABLE supinos
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   unus TEXT,
   duo  TEXT,
@@ -107,7 +112,7 @@ CREATE TABLE supinos
 
 CREATE TABLE gerundios
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   acusativo TEXT,
   genitivo  TEXT,
@@ -118,7 +123,7 @@ CREATE TABLE gerundios
 
 CREATE TABLE gerundivos
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   palavra TEXT,
   
@@ -128,7 +133,7 @@ CREATE TABLE gerundivos
 -- VOZES
 CREATE TABLE IF NOT EXISTS ativa
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   infinitivo INTEGER,
   indicativo INTEGER,
@@ -152,7 +157,7 @@ CREATE TABLE IF NOT EXISTS ativa
 
 CREATE TABLE IF NOT EXISTS passiva
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   infinitivo INTEGER,
   indicativo INTEGER,
@@ -172,7 +177,7 @@ CREATE TABLE IF NOT EXISTS passiva
 -- O VERBO
 CREATE TABLE IF NOT EXISTS verbos
 (
-  id SERIAL,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
 
   caracteristica TEXT
   conjugacao INTEGER,
@@ -351,17 +356,17 @@ INSERT INTO subjuntivos VALUES
 -- INSERÇÃO DE INFINITIVOS (ativos e passivos)
 
 INSERT INTO infinitivos 
-( 0, 'amáre','amávisse','amátúrum esse' ),
-( 1, 'amárí','amátum esse','amátum írí' ),
+( 0,'a','amáre','amávisse','amátúrum esse' ),
+( 1,'p','amárí','amátum esse','amátum írí' ),
 
-( 2, 'monére', 'monuisse', 'monitúrum esse' ),
-( 3, 'monérí','monitum esse','monitum írí' ),
+( 2,'a','monére', 'monuisse', 'monitúrum esse' ),
+( 3,'p','monérí','monitum esse','monitum írí' ),
 
-( 4, 'legere', 'légisse', 'léctúrum esse' ),
-( 5, 'legí','léctum esse','léctum írí'),
+( 4,'a','legere', 'légisse', 'léctúrum esse' ),
+( 5,'p','legí','léctum esse','léctum írí'),
 
-( 6, 'audíre','audívisse','audítúrum esse'),
-( 7, 'audírí','audítum esse','audítum írí');
+( 6,'a','audíre','audívisse','audítúrum esse'),
+( 7,'p','audírí','audítum esse','audítum írí');
 
 
 

@@ -1,25 +1,23 @@
-import { View, Pressable, Text, TextInput } from 'react-native';
+import { View, Pressable, Text } from 'react-native';
 import { Link } from 'expo-router';
+import TecladoCalculadora from '@/src/components/subparte/Teclado';
+import { telaImpressao } from '../../styles/subparte/calculadora';
 
 export default function Calculadora()
 {
   return (
       <View >
-        <View>
-
-        <TextInput id='visor-calculadora'>
-        </TextInput>
-        <View id='teclado-calculadora'>
-
+        <View >
+          <Text style={telaImpressao.tela} id='display'> display </Text>
         </View>
 
-          <Link href={"/"}>
-            <Pressable>
-              <Text> Retornar </Text>
-            </Pressable>
-          </Link>
-
-        </View>
+        <TecladoCalculadora/>
+        
+        <Link href={"/"}>
+          <Pressable>
+            <Text> Retornar </Text>
+          </Pressable>
+        </Link>
       </View>
   );
 }
