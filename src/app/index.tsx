@@ -1,30 +1,16 @@
-import { View, Pressable, Text } from 'react-native';
-import { Link } from 'expo-router';
+import { View } from 'react-native';
 import { estilos } from '../styles/index';
+
+import BotaoApp from '../components/BotaoApp';
 
 export default function Page()
 {
   return (
       <View >
         <View style={[estilos.container, estilos.exibirBorda]}>
-
-          <Link href={"/conjugacao"} style={estilos.botao}>
-            <Pressable>
-              <Text> Conjugar </Text>
-            </Pressable>
-          </Link>
-
-          <Link href={"/declinacao"} style={estilos.botao}>
-            <Pressable>
-              <Text> Declinar </Text>
-            </Pressable>
-          </Link>
-
-          <Pressable style={estilos.botao}>
-            <Text> Sair </Text>
-          </Pressable>
-
-          <Link href={"/subparte"}><Pressable><Text> calculadora </Text></Pressable></Link>
+          <BotaoApp titulo='Conjugar' tipo="navegacao" rumo="/conjugacao" />
+          <BotaoApp titulo='Declinar' tipo="navegacao" rumo="/declinacao" />
+          <BotaoApp titulo='Sair' tipo="navegacao" rumo="/" />
         </View>
       </View>
   );

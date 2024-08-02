@@ -1,13 +1,14 @@
-/* Componente do desafio de declinação com seus campos
- * de preenchimento de texto.
- * LPLA-br 21/03/2024
- * */
-
+/* LPLA-br 21/03/2024 */
 import React from "react";
 import { View, Text } from 'react-native';
 import { StyleSheet } from "react-native";
-import TextBiInput from "../sub-componentes/TextBiInput";
 
+import TextBiInput from "./TextBiInput";
+
+/**
+ * Macrocomponente contendo todos os campos
+ * necessários para o exercício de declinção.
+* */
 export default function Declinar()
 {
   return (
@@ -23,11 +24,11 @@ export default function Declinar()
           </View>
 
           <View>
-            <TextBiInput caso="Nominativo"  />
-            <TextBiInput caso="Genitivo"  />
-            <TextBiInput caso="Dativo"  />
-            <TextBiInput caso="Acusativo"  />
-            <TextBiInput caso="Ablativo"  />
+            <TextBiInput titulo="Nominativo" campoa="singular" campob="plural" />
+            <TextBiInput titulo="Genitivo" campoa="singular" campob="plural" />
+            <TextBiInput titulo="Dativo"  campoa="singular" campob="plural" />
+            <TextBiInput titulo="Acusativo"  campoa="singular" campob="plural" />
+            <TextBiInput titulo="Ablativo"  campoa="singular" campob="plural" />
           </View>
         </View>
 

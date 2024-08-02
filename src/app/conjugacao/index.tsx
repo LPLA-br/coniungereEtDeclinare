@@ -1,18 +1,76 @@
 import { View, Text, Pressable } from 'react-native';
+import { useState, useEffect } from 'react';
 import { Link } from 'expo-router';
+
+import axios from 'axios';
+
+import BotaoApp from '@/src/components/BotaoApp';
 
 /** Tela de conjugação com elementos internos
  *  dinâmicos.
  * */
 export default function Conjugacao()
 {
+  const [ dados, setDados ] = useState<any[]>();
+  const [ verboAlvo, setVerboAlvo ] = useState<string>();
+
+  const obterDados = async () =>
+  {
+    try
+    {
+      const response = await axios.get( "http://127.0.0.1:8080/verbos/infinitivos" );
+      if( typeof response.data == "string" )
+      {
+        console.log( response.data );
+        let resposta;
+        try
+        {
+          resposta = JSON.parse( response.data );
+          setDados( resposta );
+        }
+        catch( err )
+        {
+          console.log( "ERRO: ", err );
+        }
+      }
+      else if ( typeof response.data == "object" )
+      {
+        console.log( response.data );
+        if ( typeof response.data.res != "undefined" )
+        {
+          setDados( response.data.res );
+        }
+      }
+    }
+    catch (error)
+    {
+      console.error('NÃO FOI POSSÍVEL OBTER DADOS:', error);
+      setDados( [{praesens:"Sem resposta"}] );
+    }
+  };
+
+  useEffect(
+  () =>
+  {
+    obterDados();
+  },
+  []);
+
   return (
     <View>
       <View>
-        <Text> conteúdo dinâmico das Conjugações </Text>
-        <Pressable>
-          <Link href={"/"}> voltar </Link>
-        </Pressable>
+
+        <Text> REGULARES </Text>
+        <View id='listaVerbos'>
+        {
+          (typeof dados == "undefined") ?
+          (<Text>Undefined</Text>) :
+          (dados.map( (item)=>( <BotaoApp titulo={item.praesens} tipo='interacao' /> )) )
+        }
+        </View>
+
+        <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
+        <BotaoApp titulo='Voltar' tipo="navegacao" rumo="/" />
       </View>
     </View>
   );
