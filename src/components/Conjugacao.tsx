@@ -1,7 +1,8 @@
 /* LPLA-br 21/03/2024 */
 import React from "react";
 import { View, Text, TextInput } from 'react-native';
-import { StyleSheet } from "react-native";
+
+import estiloConjugacao from "../styles/componentes/conjugacao";
 
 type LocalProps =
 {
@@ -19,7 +20,7 @@ export default function Conjugacao( props: LocalProps )
   return (
     <View>
       <Text> {props.tempo} </Text>
-      <View id={props.tempo} style={estilos.inputs}>
+      <View id={props.tempo} style={estiloConjugacao.inputs}>
         <TextInput id="pps" placeholder="primeira pessoa do singular"></TextInput>
         <TextInput id="sps" placeholder="segunda pessoa do singular"></TextInput>
         <TextInput id="tps" placeholder="terceira pessoa do singular"></TextInput>
@@ -32,13 +33,4 @@ export default function Conjugacao( props: LocalProps )
   );
 }
 
-const estilos = StyleSheet.create(
-  {
-    inputs:
-    {
-      display: 'flex',
-      flexDirection: 'row',
-    }
-  }
-);
 

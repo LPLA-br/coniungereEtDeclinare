@@ -1,7 +1,8 @@
 /* ESTILIZAÇÃO DA TELA INICIAL */
 import { StyleSheet } from "react-native";
 
-const estilos = StyleSheet.create(
+/* estilo de src/app/index.tsx */
+const estiloTelaInicial = StyleSheet.create(
 {
   viewPrincipal:
   {
@@ -28,5 +29,5 @@ const estilos = StyleSheet.create(
   }
 });
 
-export { estilos };
+export { estiloTelaInicial };
 

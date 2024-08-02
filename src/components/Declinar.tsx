@@ -1,9 +1,10 @@
 /* LPLA-br 21/03/2024 */
 import React from "react";
 import { View, Text } from 'react-native';
-import { StyleSheet } from "react-native";
 
 import TextBiInput from "./TextBiInput";
+
+import estiloDeclinacoes from "../styles/componentes/declinar";
 
 /**
  * Macrocomponente contendo todos os campos
@@ -18,7 +19,7 @@ export default function Declinar()
 
         <View>
 
-          <View style={estilos.singPlur}>
+          <View style={estiloDeclinacoes.singPlur}>
             <Text> SINGULAR </Text>
             <Text> PLURAL </Text>
           </View>
@@ -36,14 +37,3 @@ export default function Declinar()
     </View>
   );
 }
-
-const estilos = StyleSheet.create(
-  {
-    singPlur:
-    {
-      display: 'flex',
-      flexDirection: 'row'
-    }
-  }
-);
-

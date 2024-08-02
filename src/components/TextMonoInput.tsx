@@ -1,7 +1,8 @@
 /* LPLA-br 08/07/2024 */
 import React from "react";
 import { View, TextInput, Text } from "react-native";
-import { StyleSheet } from "react-native";
+
+import estiloTextMonoInput from "../styles/componentes/textMonoInput";
 
 type LocalProps =
 {
@@ -16,7 +17,7 @@ type LocalProps =
 export default function TextMonoInput( props: LocalProps )
 {
   return (
-    <View style={estilos.componentesEmLinha}>
+    <View style={estiloTextMonoInput.componentesEmLinha}>
       <Text> {props.titulo} </Text>
       <TextInput id={props.titulo} ></TextInput>
     </View>
@@ -24,12 +25,3 @@ export default function TextMonoInput( props: LocalProps )
 }
 
 
-const estilos = StyleSheet.create(
-  {
-    componentesEmLinha:
-    {
-      display: 'flex',
-      flexDirection: 'row',
-    }
-  }
-);

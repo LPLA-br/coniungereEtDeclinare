@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { estilos } from '../styles/head-foot';
+
+import estiloCabecalho from '../styles/cabecalho';
 
 type LocalProps =
 {
@@ -11,7 +12,7 @@ export default function Cabecalho( props: LocalProps )
 {
   return (
     <>
-      <View style={estilos.cabecalho}>
+      <View style={estiloCabecalho.cabecalho}>
         <Text > {props.texto} </Text>
       </View>
     </>
