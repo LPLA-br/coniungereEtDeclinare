@@ -39,10 +39,8 @@ export default function BotaoApp( props: LocalProps )
       );
     }
   else return (
-    <Link href={props.rumo} style={estiloBotoes.botao}>
-      <Pressable>
-        <Text> {props.titulo} </Text>
-      </Pressable>
+    <Link href={{ pathname: props.rumo }} style={estiloBotoes.botao}>
+      { props.titulo }
     </Link>
   );
 }
