@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-/* estilo de: src/app/_layout.txt subcomponente "cabecalho" */
+/* estilo da barra superior da navegação stack (pilha) */
 const estiloCabecalho = StyleSheet.create(
 {
   cabecalho:

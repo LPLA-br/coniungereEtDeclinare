@@ -4,7 +4,7 @@
 
 import { Pressable, ScrollView, View, Text, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 
 import axios from 'axios';
 
@@ -65,6 +65,7 @@ export default function Declinacao()
 
   return (
     <View>
+      <Stack.Screen options={{title:"DECLINARE"}} />
       <View>
         {
           (typeof dados == "undefined") ?
@@ -73,7 +74,6 @@ export default function Declinacao()
         }
       </View>
       <BotaoApp titulo='Declinar' tipo="navegacao" rumo={ "declinacao/" + substantivoAlvo } />
-      <BotaoApp titulo='Voltar' tipo="navegacao" rumo="/" />
     </View>
   );
 }

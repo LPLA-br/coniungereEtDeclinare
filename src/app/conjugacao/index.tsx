@@ -1,6 +1,6 @@
 import { View, Text, Pressable } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Link } from 'expo-router';
+import { Link, Stack } from 'expo-router';
 
 import axios from 'axios';
 
@@ -59,7 +59,7 @@ export default function Conjugacao()
   return (
     <View>
       <View>
-
+        <Stack.Screen options={{title:"CONIUNGERE"}} />
         <Text> REGULARES </Text>
         <View id='listaVerbos'>
         {
@@ -70,7 +70,6 @@ export default function Conjugacao()
         </View>
 
         <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
-        <BotaoApp titulo='Voltar' tipo="navegacao" rumo="/" />
       </View>
     </View>
   );
