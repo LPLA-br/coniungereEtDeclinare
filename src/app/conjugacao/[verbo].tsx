@@ -10,13 +10,8 @@ import {
   AccordionTitleText,
   AccordionIcon
 } from "@/components/ui/accordion";
-import {
-  Checkbox,
-  CheckboxIndicator,
-  CheckboxIcon,
-  CheckboxLabel
-} from "@/components/ui/checkbox";
 
+import CaixaSeletora from "../../components/CaixaSeletora";
 
 /** Seletores que configuram o exercicio de conjugação
  *  a ser feito. Rota lida: /conjugacao/[VERBO]
@@ -64,11 +59,12 @@ export default function RotaConjugacao()
 
             <AccordionContent>
 
-              <Checkbox value="demo" size="md" isInvalid={false} isDisabled={false}>
-                <CheckboxIndicator>
-                </CheckboxIndicator>
-                <CheckboxLabel> presente </CheckboxLabel>
-              </Checkbox>
+            <CaixaSeletora titulo="presente" />
+            <CaixaSeletora titulo="imperfeito" />
+            <CaixaSeletora titulo="perfeito" />
+            <CaixaSeletora titulo="mais que perfeito" />
+            <CaixaSeletora titulo="futuro perfeito" />
+            <CaixaSeletora titulo="futuro" />
 
             </AccordionContent>
           </AccordionItem>
