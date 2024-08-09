@@ -6,3 +6,6 @@
   background-color: #2a8c4a;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
