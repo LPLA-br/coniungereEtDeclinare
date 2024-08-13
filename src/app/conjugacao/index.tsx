@@ -60,16 +60,29 @@ export default function Conjugacao()
     <View>
       <View>
         <Stack.Screen options={{title:"CONIUNGERE"}} />
+        <Text> {verboAlvo?.toUpperCase()} </Text>
+
         <Text> REGULARES </Text>
         <View id='listaVerbos'>
         {
           (typeof dados == "undefined") ?
-          (<Text>Undefined</Text>) :
-          (dados.map( (item)=>( <BotaoApp titulo={item.praesens} tipo='interacao' /> )) )
+          (<Text> OPS! problema ao conectar-se com servidor ! </Text>) :
+          (dados.map( (item)=>{
+            if ( item.voz == "a" )
+              return ( <BotaoApp titulo={item.praesens} tipo='alteracao' funcao={setVerboAlvo} /> )
+          }))
         }
         </View>
 
-        <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
+        <Text> ANÔMALOS </Text>
+
+        <Text> DEPONENTES </Text>
+
+        <Text> DEFECTIVOS </Text>
+
+        <View className=''>
+          <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
+        </View>
       </View>
     </View>
   );
