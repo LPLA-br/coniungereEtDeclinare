@@ -5,6 +5,7 @@
 import { Pressable, ScrollView, View, Text, FlatList } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Link, Stack } from 'expo-router';
+import { ReactNode } from 'react';
 
 import axios from 'axios';
 
@@ -24,14 +25,15 @@ export default function Declinacao()
   {
     try
     {
-      const response = await axios.get( "http://127.0.0.1:8080/nome/substantivos" );
-      if( typeof response.data == "string" )
+      const listaSubstantivos = await axios.get( "http://127.0.0.1:8080/nome/substantivos" );
+
+
+      if( typeof listaSubstantivos.data == "string" )
       {
-        console.log( response.data );
         let resposta;
         try
         {
-          resposta = JSON.parse( response.data );
+          resposta = JSON.parse( listaSubstantivos.data );
           setDados( resposta );
         }
         catch( err )
@@ -39,12 +41,11 @@ export default function Declinacao()
           console.log( "ERRO: ", err );
         }
       }
-      else if ( typeof response.data == "object" )
+      else if ( typeof listaSubstantivos.data == "object" )
       {
-        console.log( response.data );
-        if ( typeof response.data.res != "undefined" )
+        if ( typeof listaSubstantivos.data.res != "undefined" )
         {
-          setDados( response.data.res );
+          setDados( listaSubstantivos.data.res );
         }
       }
     }
@@ -63,17 +64,43 @@ export default function Declinacao()
   },
   []);
 
+  function renderizarSubstantivoPorSuaDeclinacao( declinacao: number ): ReactNode
+  {
+    console.log(dados);
+    return (
+      (typeof dados == "undefined") ?
+      (<Text> OPS! problema ao conectar-se com servidor ! </Text>) :
+      (dados.map( (item)=>
+      {
+        if ( item.nomS.length > 0 && item.declinacao == declinacao )
+          return( <BotaoApp titulo={item.nomS} tipo='alteracao' funcao={setSubstantivoAlvo} /> )
+      }))
+    )
+  }
+
   return (
     <View>
       <Stack.Screen options={{title:"DECLINARE"}} />
-      <View>
-        {
-          (typeof dados == "undefined") ?
-          (<Text>Undefined</Text>) :
-          (dados.map( (item)=>( <BotaoApp titulo={item.nomS} tipo='interacao' /> )) )
-        }
-      </View>
-      <BotaoApp titulo='Declinar' tipo="navegacao" rumo={ "declinacao/" + substantivoAlvo } />
+      <ScrollView>
+        <Text> { substantivoAlvo?.toUpperCase() } </Text>
+        <View>
+          <Text> DECLINAÇÃO I </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(1)}
+          <Text> DECLINAÇÃO V </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(5)}
+          <Text> DECLINAÇÃO II </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(2)}
+          <Text> DECLINAÇÃO IV </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(4)}
+          <Text> DECLINAÇÃO III </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(3)}
+        </View>
+
+        <View className=''>
+          <BotaoApp titulo='Declinar' tipo="navegacao" rumo={ "declinacao/" + substantivoAlvo } />
+        </View>
+
+      </ScrollView>
     </View>
   );
 }
