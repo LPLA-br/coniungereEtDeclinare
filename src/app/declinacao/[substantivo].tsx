@@ -2,24 +2,25 @@ import { View, Text, ScrollView, SafeAreaView } from "react-native";
 import { useLocalSearchParams, useGlobalSearchParams, Link } from "expo-router";
 import { Stack } from "expo-router";
 
+
 import Declinar from "@/src/components/Declinar";
-import BotaoApp from "@/src/components/BotaoApp";
+
+import Casos from "@/src/constants/Casos";
 
 export default function RotaConjugacao()
 {
-  const local = useLocalSearchParams();
+  const parametros = useLocalSearchParams();
 
   return (
-<SafeAreaView>
+    <SafeAreaView>
       <View>
         <Stack.Screen options={{ title: "CONIUNGERE" }} />
         <View id="tituloSubstativo">
-          <Text> {local.substantivo} </Text>
+          <Text> {parametros.substantivo} </Text>
         </View>
 
-        <Declinar ordenacao="linhares"/>
+        <Declinar ordenacao="linhares" parametroRota={parametros} />
 
-        <BotaoApp titulo="aferir resultados" tipo="interacao" funcao={()=>{console.log("uninplemented")}}/>
       </View>
     </SafeAreaView>
   );
