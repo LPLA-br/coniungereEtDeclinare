@@ -47,7 +47,7 @@ export default function Declinacao()
           {renderizarSubstantivoPorSuaDeclinacao(3,dados,setSubstantivoAlvo)}
         </View>
 
-        <View className=''>
+        <View>
           <BotaoApp titulo='Declinar' tipo="navegacao" rumo={ "declinacao/" + substantivoAlvo } />
         </View>
 
