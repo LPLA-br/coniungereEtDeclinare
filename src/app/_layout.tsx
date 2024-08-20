@@ -1,6 +1,5 @@
 import './global.css';
 import "@/src/app/global.css";
-import { GluestackUIProvider } from "@/components/ui/gluestack-ui-provider";
 import { Stack, Slot } from 'expo-router';
 
 //componente cabecalho descatado

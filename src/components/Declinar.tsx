@@ -1,7 +1,6 @@
 /* LPLA-br 21/03/2024 */
 import { useState, useEffect } from "react";
 import { View, Text, Button } from 'react-native';
-import axios from "axios";
 
 import TextBiInput from "./TextBiInput";
 import BotaoApp from "@/src/components/BotaoApp";
@@ -9,6 +8,9 @@ import BotaoApp from "@/src/components/BotaoApp";
 import estiloDeclinacoes from "../styles/componentes/declinar";
 
 import Casos from "../constants/Casos";
+
+import obterDeclinacaoCorreta from "../hooks/obterDeclinacaoCorreta";
+import aferirResultados from "../hooks/aferirResultados";
 
 type LocalProps =
 {
@@ -37,62 +39,15 @@ export default function Declinar( props: LocalProps )
   const [ vocS, setVocS ] = useState<string>("");
   const [ vocP, setVocP ] = useState<string>("");
 
-  const requisitarDeclinacaoCorreta = async () =>
-  {
-      try
-      {
-        const substantivo = await axios.get( encodeURI( `http://127.0.0.1:8080/nome/substantivo?noms=${props.parametroRota.substantivo}`));
-
-        if ( typeof substantivo == "object" )
-        {
-          console.log(substantivo.data);
-          setSubstantivo( substantivo.data );
-        }
-        else throw new Error( "Resposta não é objeto" );
-      }
-      catch ( err )
-      {
-        console.log( "ERRO: ",err );
-      }
-  }
-
-  //em progresso
-  const aferirResultados = ()=>
-  {
-    const entradaUsuario = {
-      nomS: nomS,
-      nomP: nomP,
-      genS: genS,
-      genP: genP,
-      datS: datS,
-      datP: datP,
-      accS: accS,
-      accP: accP,
-      ablS: ablS,
-      ablP: ablP,
-      vocS: vocS,
-      vocP: vocP
-    };
-    let retorno = {};
-
-    for ( const chave in entradaUsuario )
-    {
-      if ( (entradaUsuario[chave]) == (substantivo[chave]))
-      {
-        retorno[chave] = "acertaste";
-      }
-      else
-      {
-        retorno[chave] = "erraste";
-      }
-    }
-    console.log( JSON.stringify(retorno) );
-  }
-
   useEffect(
     ()=>
     {
-      requisitarDeclinacaoCorreta();
+      (async ()=>
+      {
+        const resultado = await obterDeclinacaoCorreta( props.parametroRota.substantivo ); 
+        if ( typeof resultado == "object" )
+          setSubstantivo( resultado );
+      })();
     },
     []
   );
@@ -135,7 +90,11 @@ export default function Declinar( props: LocalProps )
           </View>
 
           <BotaoApp titulo="aferir resultados" tipo="navegacao" rumo={`/`}></BotaoApp>
-          <Button title="AFERIR RESULTADOS" onPress={()=>{ aferirResultados() }}></Button>
+          <Button title="AFERIR RESULTADOS" onPress={()=>{ aferirResultados({
+                nomS: nomS, nomP: nomP, genS: genS, genP: genP, datS: datS,
+                datP: datP, accS: accS, accP: accP, ablS: ablS, ablP: ablP,
+                vocS: vocS, vocP: vocP
+          })}}></Button>
         </View>
     </View>
   );
