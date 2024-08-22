@@ -1,13 +1,14 @@
 
-/** Define subconjuto de dados mandatório para
- *  funcionamento do subsistema de declinação.
+/** Dados que representam um subconjunto
+ *  dos dados enviado no campo "res" pelo
+ *  servidor.
 * */
 type Casos =
 {
   nomS: string, nomP: string,
   genS: string, genP: string,
   datS: string, datP: string,
-  accS: string, accP: string,
+  acuS: string, acuP: string,
   ablS: string, ablP: string,
   vocS: string, vocP: string
 }

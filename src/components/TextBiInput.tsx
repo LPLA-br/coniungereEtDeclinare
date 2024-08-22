@@ -28,13 +28,13 @@ export default function TextBiInput( props: LocalProps )
         <TextInput
           id={props.campoa}
           placeholder={props.campoa}
-          onEndEditing={ novoTexto => props.settera( novoTexto ) }
+          onChangeText={ novoTexto => props.settera( novoTexto ) }
         ></TextInput>
 
         <TextInput
           id={props.campob}
           placeholder={props.campob}
-          onEndEditing={ novoTexto => props.setterb( novoTexto ) }
+          onChangeText={ novoTexto => props.setterb( novoTexto ) }
         ></TextInput>
 
       </View>

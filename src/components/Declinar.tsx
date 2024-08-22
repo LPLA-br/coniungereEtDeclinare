@@ -1,16 +1,17 @@
 /* LPLA-br 21/03/2024 */
 import { useState, useEffect } from "react";
 import { View, Text, Button } from 'react-native';
+import { router } from "expo-router";
+import { Dialog } from "@rneui/base";
 
 import TextBiInput from "./TextBiInput";
-import BotaoApp from "@/src/components/BotaoApp";
 
 import estiloDeclinacoes from "../styles/componentes/declinar";
 
-import Casos from "../constants/Casos";
-
-import obterDeclinacaoCorreta from "../hooks/obterDeclinacaoCorreta";
 import aferirResultados from "../hooks/aferirResultados";
+import obterDeclinacaoCorreta from "../hooks/obterDeclinacaoCorreta";
+import alterarEstadoCheckbox from "../hooks/alterarEstadoCheckbox";
+import inputsPreenchidos from "../hooks/inputsPreenchidos";
 
 type LocalProps =
 {
@@ -24,7 +25,9 @@ type LocalProps =
 * */
 export default function Declinar( props: LocalProps )
 {
-  const [ substantivo, setSubstantivo ] = useState<Casos>(); //request axios
+  const [ mostrarDialogo, setMostrarDialogo ] = useState<boolean>(false);
+  const [ aviso, setAviso ] = useState<boolean>(false);
+  const [ resultado, setResultado ] = useState<string>();
 
   const [ nomS, setNomS ] = useState<string>("");
   const [ nomP, setNomP ] = useState<string>("");
@@ -32,30 +35,19 @@ export default function Declinar( props: LocalProps )
   const [ genP, setGenP ] = useState<string>("");
   const [ datS, setDatS ] = useState<string>("");
   const [ datP, setDatP ] = useState<string>("");
-  const [ accS, setAccS ] = useState<string>("");
-  const [ accP, setAccP ] = useState<string>("");
+  const [ acuS, setAcuS ] = useState<string>("");
+  const [ acuP, setAcuP ] = useState<string>("");
   const [ ablS, setAblS ] = useState<string>("");
   const [ ablP, setAblP ] = useState<string>("");
   const [ vocS, setVocS ] = useState<string>("");
   const [ vocP, setVocP ] = useState<string>("");
 
-  useEffect(
-    ()=>
-    {
-      (async ()=>
-      {
-        const resultado = await obterDeclinacaoCorreta( props.parametroRota.substantivo ); 
-        if ( typeof resultado == "object" )
-          setSubstantivo( resultado );
-      })();
-    },
-    []
-  );
+
 
   const LINHARES = (
     <>
       <TextBiInput titulo="Nominativo" campoa="singular" campob="plural" settera={setNomS} setterb={setNomP} />
-      <TextBiInput titulo="Acusativo"  campoa="singular" campob="plural" settera={setAccS} setterb={setAccP} />
+      <TextBiInput titulo="Acusativo"  campoa="singular" campob="plural" settera={setAcuS} setterb={setAcuP} />
       <TextBiInput titulo="Dativo"  campoa="singular" campob="plural" settera={setDatS} setterb={setDatP} />
       <TextBiInput titulo="Ablativo"  campoa="singular" campob="plural" settera={setAblS} setterb={setAblP} />
       <TextBiInput titulo="Genitivo" campoa="singular" campob="plural" settera={setGenS} setterb={setGenP} />
@@ -66,7 +58,7 @@ export default function Declinar( props: LocalProps )
   const ORBERG = (
     <>
       <TextBiInput titulo="Nominativo" campoa="singular" campob="plural" settera={setNomS} setterb={setNomP} />
-      <TextBiInput titulo="Acusativo"  campoa="singular" campob="plural" settera={setAccS} setterb={setAccP} />
+      <TextBiInput titulo="Acusativo"  campoa="singular" campob="plural" settera={setAcuS} setterb={setAcuP} />
       <TextBiInput titulo="Genitivo" campoa="singular" campob="plural" settera={setGenS} setterb={setGenP} />
       <TextBiInput titulo="Dativo"  campoa="singular" campob="plural" settera={setDatS} setterb={setDatP} />
       <TextBiInput titulo="Ablativo"  campoa="singular" campob="plural" settera={setAblS} setterb={setAblP} />
@@ -89,12 +81,46 @@ export default function Declinar( props: LocalProps )
             }
           </View>
 
-          <BotaoApp titulo="aferir resultados" tipo="navegacao" rumo={`/`}></BotaoApp>
-          <Button title="AFERIR RESULTADOS" onPress={()=>{ aferirResultados({
-                nomS: nomS, nomP: nomP, genS: genS, genP: genP, datS: datS,
-                datP: datP, accS: accS, accP: accP, ablS: ablS, ablP: ablP,
-                vocS: vocS, vocP: vocP
-          })}}></Button>
+          <Dialog overlayStyle={{backgroundColor:"#ffffff"}} isVisible={mostrarDialogo} onBackdropPress={()=>{ setMostrarDialogo( !mostrarDialogo ) }} >
+            <Dialog.Title title="Resultados"/>
+            <Text> {resultado} </Text>
+            <Dialog.Actions>
+              <Dialog.Button title="TENTAR NOVAMENTE" onPress={ () => { setMostrarDialogo( !mostrarDialogo ); } }/>
+              <Dialog.Button title="NOVO EXERCICIO" onPress={ () => { router.replace("/declinacao/"); } }/>
+            </Dialog.Actions>
+          </Dialog>
+
+          <Dialog overlayStyle={{backgroundColor:"#ffffff"}} isVisible={aviso} onBackdropPress={ ()=>{setAviso(!aviso)} } >
+            <Text> Certifica-te de que preencheste todos os campos ! </Text>
+            <Dialog.Actions>
+              <Dialog.Button title="OK" onPress={()=>{setAviso( !aviso )}} />
+            </Dialog.Actions>
+          </Dialog>
+
+          <Button title="AFERIR RESULTADOS" onPress={ ()=>{
+            const entrada = {
+               nomS:nomS, nomP:nomP,
+               genS:genS, genP:genP,
+               datS:datS, datP:datP,
+               acuS:acuS, acuP:acuP,
+               ablS:ablS, ablP:ablP,
+               vocS:vocS, vocP:vocP
+            };
+            if ( inputsPreenchidos([ nomS, nomP, genS, genP, datS, datP, acuS, acuP, ablS, ablP, vocS, vocP ]) )
+            {
+              setMostrarDialogo( !mostrarDialogo );
+              (async ()=>
+              {
+                const resultado = await aferirResultados( entrada, await obterDeclinacaoCorreta( nomS ) );
+                console.log( resultado );
+                setResultado( ( typeof resultado === "string" ? (resultado) : ("OPS: falha ao processar exercício") ) );
+              })();
+            }
+            else
+            {
+              setAviso( !aviso );
+            }
+           } } />
         </View>
     </View>
   );
