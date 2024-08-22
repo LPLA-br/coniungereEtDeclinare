@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { estiloTelaInicial } from '../styles/index';
 import { Stack } from 'expo-router';
-import { Link } from 'expo-router';
 
 import BotaoApp from '../components/BotaoApp';
 
