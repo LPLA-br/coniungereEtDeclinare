@@ -5,8 +5,6 @@ import { Stack } from "expo-router";
 
 import Declinar from "@/src/components/Declinar";
 
-import Casos from "@/src/constants/Casos";
-
 export default function RotaConjugacao()
 {
   const parametros = useLocalSearchParams();

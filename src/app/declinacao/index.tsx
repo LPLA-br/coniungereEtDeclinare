@@ -43,7 +43,7 @@ export default function Declinacao()
           {renderizarSubstantivoPorSuaDeclinacao(2,dados,setSubstantivoAlvo)}
           <Text> DECLINAÇÃO IV </Text>
           {renderizarSubstantivoPorSuaDeclinacao(4,dados,setSubstantivoAlvo)}
-          <Text> DECLINAÇÃO III </Text>k
+          <Text> DECLINAÇÃO III </Text>
           {renderizarSubstantivoPorSuaDeclinacao(3,dados,setSubstantivoAlvo)}
         </View>
 

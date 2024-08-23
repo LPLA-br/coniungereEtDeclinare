@@ -4,7 +4,6 @@ import { useState } from "react";
 
 import { CheckBox, ListItem } from "@rneui/themed";
 
-import AcordeaoCabecalho from "@/src/components/AcordeaoCabecalho";
 import BotaoApp from "@/src/components/BotaoApp";
 
 import alterarEstadoCheckbox from "@/src/hooks/alterarEstadoCheckbox";
