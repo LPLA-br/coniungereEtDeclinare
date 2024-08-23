@@ -1,5 +1,6 @@
 /* LPLA-br 21/03/2024 */
 import { useState, useEffect } from "react";
+import { ReactNode } from "react";
 import { View, Text, Button } from 'react-native';
 import { router } from "expo-router";
 import { Dialog } from "@rneui/base";
@@ -10,8 +11,6 @@ import estiloDeclinacoes from "../styles/componentes/declinar";
 
 import aferirResultados from "../hooks/aferirResultados";
 import obterDeclinacaoCorreta from "../hooks/obterDeclinacaoCorreta";
-import alterarEstadoCheckbox from "../hooks/alterarEstadoCheckbox";
-import inputsPreenchidos from "../hooks/inputsPreenchidos";
 
 type LocalProps =
 {
@@ -97,30 +96,21 @@ export default function Declinar( props: LocalProps )
             </Dialog.Actions>
           </Dialog>
 
-          <Button title="AFERIR RESULTADOS" onPress={ ()=>{
-            const entrada = {
-               nomS:nomS, nomP:nomP,
-               genS:genS, genP:genP,
-               datS:datS, datP:datP,
-               acuS:acuS, acuP:acuP,
-               ablS:ablS, ablP:ablP,
-               vocS:vocS, vocP:vocP
-            };
-            if ( inputsPreenchidos([ nomS, nomP, genS, genP, datS, datP, acuS, acuP, ablS, ablP, vocS, vocP ]) )
+          <Button title="AFERIR RESULTADOS" onPress={ ()=>
             {
-              setMostrarDialogo( !mostrarDialogo );
+              const entrada = {
+                 nomS:nomS, nomP:nomP, genS:genS, genP:genP,
+                 datS:datS, datP:datP, acuS:acuS, acuP:acuP,
+                 ablS:ablS, ablP:ablP, vocS:vocS, vocP:vocP
+              };
               (async ()=>
               {
-                const resultado = await aferirResultados( entrada, await obterDeclinacaoCorreta( nomS ) );
-                console.log( resultado );
+                const resultado = await aferirResultados( entrada, await obterDeclinacaoCorreta( nomS ), setAviso, aviso );
                 setResultado( ( typeof resultado === "string" ? (resultado) : ("OPS: falha ao processar exercício") ) );
+                ( typeof resultado !== "undefined" ? setMostrarDialogo( !mostrarDialogo ) : (0) );
               })();
             }
-            else
-            {
-              setAviso( !aviso );
-            }
-           } } />
+          } />
         </View>
     </View>
   );
