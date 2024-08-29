@@ -1,11 +1,11 @@
 /* LPLA-br 21/03/2024 */
 import { useState, useEffect } from "react";
-import { ReactNode } from "react";
 import { View, Text, Button } from 'react-native';
 import { router } from "expo-router";
 import { Dialog } from "@rneui/base";
 
 import TextBiInput from "./TextBiInput";
+import BotaoApp from "./BotaoApp";
 
 import estiloDeclinacoes from "../styles/componentes/declinar";
 
@@ -24,9 +24,9 @@ type LocalProps =
 * */
 export default function Declinar( props: LocalProps )
 {
-  const [ mostrarDialogo, setMostrarDialogo ] = useState<boolean>(false);
+  const [ modoExibicao, setModoExibicao ] = useState<boolean>(false);
+
   const [ aviso, setAviso ] = useState<boolean>(false);
-  const [ resultado, setResultado ] = useState<string>();
 
   const [ nomS, setNomS ] = useState<string>("");
   const [ nomP, setNomP ] = useState<string>("");
@@ -41,6 +41,7 @@ export default function Declinar( props: LocalProps )
   const [ vocS, setVocS ] = useState<string>("");
   const [ vocP, setVocP ] = useState<string>("");
 
+  const [ resultado, setResultado ] = useState<string>("");
 
 
   const LINHARES = (
@@ -73,21 +74,18 @@ export default function Declinar( props: LocalProps )
             <Text> PLURAL </Text>
           </View>
 
-          <View>
-            { (typeof props.ordenacao != "undefined") ?
-              ( (props.ordenacao == "linhares") ? LINHARES : ORBERG ) :
-              (<Text> FALHA: propriedade props.ordenacao: string não fornecida. </Text>)
-            }
-          </View>
-
-          <Dialog overlayStyle={{backgroundColor:"#ffffff"}} isVisible={mostrarDialogo} onBackdropPress={()=>{ setMostrarDialogo( !mostrarDialogo ) }} >
-            <Dialog.Title title="Resultados"/>
-            <Text> {resultado} </Text>
-            <Dialog.Actions>
-              <Dialog.Button title="TENTAR NOVAMENTE" onPress={ () => { setMostrarDialogo( !mostrarDialogo ); } }/>
-              <Dialog.Button title="NOVO EXERCICIO" onPress={ () => { router.replace("/declinacao/"); } }/>
-            </Dialog.Actions>
-          </Dialog>
+          {
+            ( modoExibicao == false ?
+              (
+                ( typeof props.ordenacao != "undefined") ?
+                ( (props.ordenacao == "linhares") ? LINHARES : ORBERG ) :
+                (<Text> FALHA: propriedade props.ordenacao: string não fornecida. </Text>)
+              ) :
+              (
+                <Text> {resultado} </Text>
+              )
+            )
+          }
 
           <Dialog overlayStyle={{backgroundColor:"#ffffff"}} isVisible={aviso} onBackdropPress={ ()=>{setAviso(!aviso)} } >
             <Text> Certifica-te de que preencheste todos os campos ! </Text>
@@ -96,21 +94,30 @@ export default function Declinar( props: LocalProps )
             </Dialog.Actions>
           </Dialog>
 
-          <Button title="AFERIR RESULTADOS" onPress={ ()=>
-            {
-              const entrada = {
-                 nomS:nomS, nomP:nomP, genS:genS, genP:genP,
-                 datS:datS, datP:datP, acuS:acuS, acuP:acuP,
-                 ablS:ablS, ablP:ablP, vocS:vocS, vocP:vocP
-              };
-              (async ()=>
-              {
-                const resultado = await aferirResultados( entrada, await obterDeclinacaoCorreta( nomS ), setAviso, aviso );
-                setResultado( ( typeof resultado === "string" ? (resultado) : ("OPS: falha ao processar exercício") ) );
-                ( typeof resultado !== "undefined" ? setMostrarDialogo( !mostrarDialogo ) : (0) );
-              })();
-            }
-          } />
+          {
+            ( modoExibicao == false ) ?
+            (
+              <BotaoApp tipo="avaliacao" titulo="AVALIAR" funcao={ ()=>
+                {
+                  const entrada = {
+                     nomS:nomS, nomP:nomP, genS:genS, genP:genP,
+                     datS:datS, datP:datP, acuS:acuS, acuP:acuP,
+                     ablS:ablS, ablP:ablP, vocS:vocS, vocP:vocP
+                  };
+                  (async ()=>
+                  {
+                    const resultado = await aferirResultados( entrada, await obterDeclinacaoCorreta( nomS ), setAviso, aviso );
+                    setResultado( ( typeof resultado === "string" ? (resultado) : ("OPS: falha ao processar exercício") ) );
+                    ( typeof resultado !== "undefined" ? (setTimeout(()=>{setModoExibicao(!modoExibicao)},1000)) : (0) );
+                  })();
+                }} />
+            ):
+            (
+              <>
+                <BotaoApp tipo="navegacao" titulo="NOVO EXERCÍCIO" rumo="/declinacao" />
+              </>
+            )
+          }
         </View>
     </View>
   );

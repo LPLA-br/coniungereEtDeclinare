@@ -12,7 +12,7 @@ export default function RotaConjugacao()
   return (
     <SafeAreaView>
       <View>
-        <Stack.Screen options={{ title: "CONIUNGERE" }} />
+        <Stack.Screen options={{ title: "DECLINARE" }} />
         <View id="tituloSubstativo">
           <Text> {parametros.substantivo} </Text>
         </View>
