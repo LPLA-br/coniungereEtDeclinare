@@ -8,7 +8,7 @@ import estiloBotoes from "../styles/componentes/botoes";
 type LocalProps =
 {
   titulo: string,
-  tipo: "navegacao" | "interacao" | "alteracao",
+  tipo: "navegacao" | "interacao" | "alteracao" | "avaliacao",
   rumo?: string,
   funcao?: Function
 };
@@ -17,8 +17,7 @@ type LocalProps =
  *  navegar entre telas ou executar
  *  funções definidas acima do "return"
  *  do componente ou passadas pela variável
- *  "props".
- *  REFATORÁTURO !
+ *  "props". modo interacao está OBSOLETO
 * */
 export default function BotaoApp( props: LocalProps )
 {
@@ -49,6 +48,15 @@ export default function BotaoApp( props: LocalProps )
       //definicao de valores de useState() passado.
       return (
         <Pressable id={props.titulo} style={estiloBotoes.botao} onPress={alterarValorUseStatePorTitulo} >
+          <Text> {props.titulo} </Text>
+        </Pressable>
+      );
+    }
+    else if ( props.tipo == "avaliacao" )
+    {
+      //corrigido para onPress
+      return (
+        <Pressable id={props.titulo} style={estiloBotoes.botao} onPress={props.funcao} >
           <Text> {props.titulo} </Text>
         </Pressable>
       );
