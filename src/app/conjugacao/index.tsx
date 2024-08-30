@@ -34,7 +34,7 @@ export default function Conjugacao()
 
         <Text> REGULARES </Text>
         <View id='listaVerbos'>
-        {renderizarVerbosPorDeVozAtiva(dados,setVerboAlvo)}
+          {renderizarVerbosPorDeVozAtiva(dados,setVerboAlvo)}
         </View>
 
         <Text> ANÔMALOS </Text>
@@ -43,7 +43,7 @@ export default function Conjugacao()
 
         <Text> DEFECTIVOS </Text>
 
-        <View className=''>
+        <View>
           <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
         </View>
       </View>

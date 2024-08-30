@@ -30,11 +30,6 @@ type VerbObj =
   supin: string,
   imper: string,
   gerun: string,
-
-  ia: string,
-  sa: string,
-  ip: string,
-  sp: string,
 };
 
 export default VerbObj;

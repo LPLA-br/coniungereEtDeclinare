@@ -5,7 +5,7 @@ import { Stack } from "expo-router";
 
 import Declinar from "@/src/components/Declinar";
 
-export default function RotaConjugacao()
+export default function ExercicioDeclinacao()
 {
   const parametros = useLocalSearchParams();
 
