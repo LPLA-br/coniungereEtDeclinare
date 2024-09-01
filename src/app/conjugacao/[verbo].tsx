@@ -1,11 +1,12 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
-import { useLocalSearchParams, useGlobalSearchParams, Stack } from "expo-router";
+import { useLocalSearchParams, Stack } from "expo-router";
 import { useState, createContext } from "react";
 
 import BotaoApp from "@/src/components/BotaoApp";
 
 import ConfiguracaoConjugacao from "@/src/components/ConfiguracaoConjugacao";
 import VerbObj from "@/src/constants/VerbObj";
+import Conjugar from "@/src/components/Conjugar";
 
 export const ConfContext = createContext();
 
@@ -14,13 +15,8 @@ export const ConfContext = createContext();
  *  */
 export default function ExercicioConjugacao()
 {
-
-  const glob  = useGlobalSearchParams();
   const local = useLocalSearchParams();
-
   const [ conf, setConf ] = useState<VerbObj | undefined>(undefined);
-
-  console.log("Local:", local.verbo, "Global:", glob.verbo);
 
   return (
     <SafeAreaView>
@@ -34,7 +30,12 @@ export default function ExercicioConjugacao()
             {
               ( typeof conf === "undefined" )?
               ( <ConfiguracaoConjugacao/> ):
-              ( <BotaoApp tipo="avaliacao" titulo="CONSOLE LOG" funcao={()=>{console.log(conf);}} /> )
+              (
+                <>
+                  <Conjugar conf={conf}/>
+                  <BotaoApp tipo="avaliacao" titulo="CONSOLE LOG" funcao={()=>{console.log(conf);}} />
+                </>
+              )
             }
           </ConfContext.Provider>
         </View>

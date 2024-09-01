@@ -1,7 +1,6 @@
 /* LPLA-br 21/03/2024 */
-import { useState, useEffect } from "react";
-import { View, Text, Button } from 'react-native';
-import { router } from "expo-router";
+import { useState } from "react";
+import { View, Text } from 'react-native';
 import { Dialog } from "@rneui/base";
 
 import TextBiInput from "./TextBiInput";

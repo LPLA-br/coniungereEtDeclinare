@@ -104,11 +104,11 @@ export default function ConfiguracaoConjugacao()
 
       <View>
         <Text> OUTROS </Text>
-        <CheckBox checked={infin} onPress={()=>{alterarEstadoCheckbox(infin,setInfin)}} title={"infinitivo"} />
-        <CheckBox checked={parti} onPress={()=>{alterarEstadoCheckbox(parti,setParti)}} title={"participio"} />
-        <CheckBox checked={supin} onPress={()=>{alterarEstadoCheckbox(supin,setSupin)}} title={"supino"} />
-        <CheckBox checked={imper} onPress={()=>{alterarEstadoCheckbox(imper,setImper)}} title={"imperativo"} />
-        <CheckBox checked={gerun} onPress={()=>{alterarEstadoCheckbox(gerun,setGerun)}} title={"gerundio e gerundivo"} />
+        <CheckBox checked={infin} onPress={()=>{alterarEstadoCheckbox(infin,setInfin)}} title={"infinitivo"} disabled />
+        <CheckBox checked={parti} onPress={()=>{alterarEstadoCheckbox(parti,setParti)}} title={"participio"} disabled/>
+        <CheckBox checked={supin} onPress={()=>{alterarEstadoCheckbox(supin,setSupin)}} title={"supino"} disabled/>
+        <CheckBox checked={imper} onPress={()=>{alterarEstadoCheckbox(imper,setImper)}} title={"imperativo"} disabled/>
+        <CheckBox checked={gerun} onPress={()=>{alterarEstadoCheckbox(gerun,setGerun)}} title={"gerundio e gerundivo"} disabled/>
       </View>
       <BotaoApp titulo="INICIAR EXERCICIO" tipo="avaliacao" funcao={()=>{
         setConf({
