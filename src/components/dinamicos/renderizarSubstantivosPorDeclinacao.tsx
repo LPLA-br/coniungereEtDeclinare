@@ -6,9 +6,10 @@ import BotaoApp from "../BotaoApp";
 /**
 * Renderiza substantivos presentes em dados
 * de acordo com a declinação especificada.
-* requer setter externo para definir qual
-* substantivo será de exercício.
-* retorna BotaoApp ou Text de aviso ou elemento vazio.
+* Recebe: numero da declinação,
+* dados requisitados no formato lista de objetos:{ nomS: string, declinacao: number, genero: string.length=1 },
+* setter de um useState para <string>
+* retorna array de reactNode<BotaoApp> ou um <Text> de aviso ou elemento vazio <></> (problema texto redundante).
 * */
 const renderizarSubstantivoPorSuaDeclinacao = ( declinacao: number, dados: any[] | undefined, setterSubstantivoAlvo: Function ): ReactNode =>
 {
