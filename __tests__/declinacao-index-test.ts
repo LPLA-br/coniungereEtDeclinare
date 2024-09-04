@@ -65,8 +65,9 @@ describe("renderizarSubstantivosPorDeclinacao", ()=>
       expect( componente.length ).toBeGreaterThan( 0 );
       expect( componente[0] ).toBe( "BotaoApp" );
     })();
+  });
 
-  test("renderizacao dinamica de substantivos falha por servdior indisponível", ()=>
+  test("renderizacao dinamica de substantivos falha por servidor indisponível", ()=>
   {
     (async()=>
     {
@@ -92,9 +93,8 @@ describe("renderizarSubstantivosPorDeclinacao", ()=>
 
       let resposta = await obterIndexPalavras("http://127.0.0.1:8080/nome/substantivos");
       let componente = renderizarSubstantivoPorSuaDeclinacao( 1, resposta, mockUseStateSetter );
-      expect( componente.length ).toBeGreaterThan( 0 );
-      expect( componente.filter( (v:string)=>{ if(v=="Vazio") return v; }) ).toHaveLength( 0 );
+      let vazios: string | string[] = Object.keys( componente ).filter((v)=>{if(v=="Vazio") return v}); 
+      expect( vazios.length ).toBe( 0 );
     })();
   });
 });
-

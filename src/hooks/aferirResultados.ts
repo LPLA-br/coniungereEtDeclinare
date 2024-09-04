@@ -1,4 +1,5 @@
 import Casos from "../constants/Casos";
+import CasosUnion from "../constants/CasosUnion";
 import inputsPreenchidos from "./inputsPreenchidos";
 import traduzirChaveParaPalavra from "./traduzirChaveParaPalavra";
 

@@ -39,7 +39,6 @@ const obterIndexPalavras = async ( url: string ) =>
     }
     catch (error)
     {
-      console.error('NÃO FOI POSSÍVEL OBTER DADOS:', error);
       return undefined;
     }
 }

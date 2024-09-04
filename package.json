@@ -7,11 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "jest --watchAll --runInBand",
+    "test": "jest",
     "ts:check": "tsc"
-  },
-  "jest": {
-    "preset": "jest-expo"
   },
   "dependencies": {
     "@babel/preset-env": "^7.25.4",

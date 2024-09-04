@@ -14,14 +14,12 @@ const obterDeclinacaoCorreta = async ( nominativoSingularSubstantivo: string ): 
 
     if ( typeof substantivo == "object" )
     {
-      console.log(substantivo.data);
       return substantivo.data.res;
     }
     else return undefined;
   }
   catch ( err )
   {
-    console.log( "ERRO: ",err );
     return undefined;
   }
 }

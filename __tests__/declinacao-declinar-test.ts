@@ -3,9 +3,9 @@
  src/app/[substantivo].tsx -> src/app/components/Declinar
 * */
 import aferirResultados from "../src/hooks/aferirResultados";
-import obterDeclinacaoCorreta from "@/src/hooks/obterDeclinacaoCorreta";
-import inputsPreenchidos from "@/src/hooks/inputsPreenchidos";
-import Casos from "@/src/constants/Casos";
+import obterDeclinacaoCorreta from "../src/hooks/obterDeclinacaoCorreta";
+import inputsPreenchidos from "../src/hooks/inputsPreenchidos";
+import Casos from "../src/constants/Casos";
 
 
 describe("obterDeclinacaoCorreta",()=>
@@ -114,6 +114,7 @@ describe("aferirResultados",()=>
       expect( typeof resultado ).toBe( "string" );
       expect( fakeCamposPreenchidos ).toBe( true );
     })();
+  });
 
   test("aferição de resultados parcialmente corretos",()=>
   {
@@ -142,6 +143,7 @@ describe("aferirResultados",()=>
       expect( typeof resultado ).toBe( "string" );
       expect( fakeCamposPreenchidos ).toBe( true );
     })();
+  });
 
 
   test("aferição de resultados totalmente errados",()=>
