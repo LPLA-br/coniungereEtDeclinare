@@ -1,4 +1,5 @@
 import Casos from "../constants/Casos";
+import CasosUnion from "../constants/CasosUnion";
 import inputsPreenchidos from "./inputsPreenchidos";
 import traduzirChaveParaPalavra from "./traduzirChaveParaPalavra";
 
@@ -8,8 +9,7 @@ import traduzirChaveParaPalavra from "./traduzirChaveParaPalavra";
 *     recebe nominativo singular string
 *     e retorna objeto compilante do tipo
 *     "Casos"
-*   Esta função retorna string com os
-*   resultados.
+*   Esta função retorna string de resultado ou undefined
 * */
 const aferirResultados = async ( entradaUsuario: Casos, substantivoCorreto: Casos | undefined, setterAviso: Function, aviso: boolean ): Promise< string | undefined > =>
 {
