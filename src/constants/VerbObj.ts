@@ -1,4 +1,8 @@
 
+/** Define estrutura de objeto
+ *  de configuração
+*   dos exercicios de conjugação
+* */
 type VerbObj =
 {
   preia: string,

@@ -8,7 +8,7 @@ import ConfiguracaoConjugacao from "@/src/components/ConfiguracaoConjugacao";
 import VerbObj from "@/src/constants/VerbObj";
 import Conjugar from "@/src/components/Conjugar";
 
-export const ConfContext = createContext();
+export const ConfContext = createContext({});
 
 /** Seletores que configuram o exercicio de conjugação
  *  a ser feito. Rota lida: /conjugacao/[VERBO]
@@ -32,7 +32,7 @@ export default function ExercicioConjugacao()
               ( <ConfiguracaoConjugacao/> ):
               (
                 <>
-                  <Conjugar conf={conf}/>
+                  <Conjugar conf={conf} infinitivo="legere"/>
                   <BotaoApp tipo="avaliacao" titulo="CONSOLE LOG" funcao={()=>{console.log(conf);}} />
                 </>
               )

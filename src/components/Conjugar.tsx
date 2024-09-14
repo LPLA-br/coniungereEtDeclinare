@@ -8,6 +8,8 @@ import estiloConjugacao from "../styles/componentes/conjugacao";
 import VerbObj from "../constants/VerbObj";
 
 import obterConjugacaoCorreta from "../hooks/obterConjugacaoCorreta";
+import converterSelecionadosParaListaChavesDeVerbObj from "../hooks/converterSelecionadosParaListaChavesDeVerbObj";
+import traduzirChaveVerbObjParaStringRequisitavel from "../hooks/traduzirChaveVerbObjParaStringRequisitavel";
 
 import BotaoApp from "./BotaoApp";
 
@@ -42,13 +44,16 @@ export default function Conjugar( props: LocalProps )
   useEffect(()=>{
     (async ()=>
     {
-      await obterConjugacaoCorreta( props.infinitivo, "mapeamento" );
+      let selecionados = converterSelecionadosParaListaChavesDeVerbObj( props.conf );
+      let selecionadosRequisitaveis = traduzirChaveVerbObjParaStringRequisitavel( selecionados );
+      // TODO: use o selecionadosRequisitaveis para orientar a renderização dinâmica e requisição
     })();
   },[]);
 
   return (
     <View>
-      <Text> {infinitivo} </Text>
+      <Text> {props.infinitivo} </Text>
+      <Text> VOZ, MODO, TEMPO </Text>
       <View style={estiloConjugacao.inputs}>
         <TextInput id="pps" placeholder="primeira pessoa do singular" onChangeText={novoTexto => setPps( novoTexto )}></TextInput>
         <TextInput id="sps" placeholder="segunda pessoa do singular" onChangeText={novoTexto => setSps( novoTexto )}></TextInput>
@@ -64,24 +69,9 @@ export default function Conjugar( props: LocalProps )
           pps: pps, sps: sps, tps: tps,
           ppp: ppp, spp: spp, tpp: tpp
         };
+        //await obterConjugacaoCorreta( props.infinitivo, ".next()" );
       }} />
     </View>
   );
 }
-/*
-              <BotaoApp tipo="avaliacao" titulo="AVALIAR" funcao={ ()=>
-                {
-                  const entrada = {
-                     nomS:nomS, nomP:nomP, genS:genS, genP:genP,
-                     datS:datS, datP:datP, acuS:acuS, acuP:acuP,
-                     ablS:ablS, ablP:ablP, vocS:vocS, vocP:vocP
-                  };
-                  (async ()=>
-                  {
-                    const resultado = await aferirResultados( entrada, await obterDeclinacaoCorreta( nomS ), setAviso, aviso );
-                    setResultado( ( typeof resultado === "string" ? (resultado) : ("OPS: falha ao processar exercício") ) );
-                    ( typeof resultado !== "undefined" ? (setTimeout(()=>{setModoExibicao(!modoExibicao)},1000)) : (0) );
-                  })();
-                }} />
-*/
 

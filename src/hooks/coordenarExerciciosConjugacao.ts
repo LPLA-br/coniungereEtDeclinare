@@ -1,5 +1,6 @@
 import VerbObj from "../constants/VerbObj"
 
+/** mapeia qual GUI empregar para cada forma do verbo */
 const coordenarExerciciosDeConjugacao = ( config: VerbObj )=>
 {
   const pessoais = ["preia","impia","peria","mqpia","fupia",
@@ -8,4 +9,6 @@ const coordenarExerciciosDeConjugacao = ( config: VerbObj )=>
                     "futip","presp","impsp","persp","mqpsp"];
   const impessoais = ["infin","parti","supin","gerun"];
 
-}
+};
+
+export default coordenarExerciciosDeConjugacao;
