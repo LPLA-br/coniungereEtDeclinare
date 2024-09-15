@@ -1,99 +1,99 @@
-import { CONSULTAS } from "../constants/VerbRequisitaveis";
+import Gui from "../constants/gui";
 
 /** recebe lista de chaves de VerbObj que foram
  *  definidas como true e retorna lista de strings
- *  requisitáveis para o servidor.
- *  // TODO: AVALIAR RETORNO: {stringRequisitavel:string,guiType:string}[]
+ *  requisitáveis para o servidor e qual renderização
+ *  é adequada.
 * */
-const traduzirChaveVerbObjParaStringRequisitavel = ( morfologiasSelecionadas :String[] ): String[] =>
+const traduzirChaveVerbObjParaStringRequisitavel = ( morfologiasSelecionadas :String[] ): {gui:Gui,stringRequisitavel:string}[] =>
 {
-  let morfologiasRequisitaveis: String[] = [];
+  let morfologiasRequisitaveis: {gui:Gui,stringRequisitavel:string}[] = [];
 
   for ( let i = 0; i < morfologiasSelecionadas.length; i++ )
   {
     switch ( morfologiasSelecionadas[i] )
     {
       case "preia":
-        morfologiasSelecionadas.push("indicativoAtivoPresente");
+        morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoAtivoPresente"});
 				break;
       case "impia":
-        morfologiasSelecionadas.push("indicativoAtivoImperfeito");
+        morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoAtivoImperfeito"});
 				break;
       case "peria":
-        morfologiasSelecionadas.push("indicativoAtivoPerfeito");
+        morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoAtivoPerfeito"});
 				break;
       case "mqpia":
-        morfologiasSelecionadas.push("indicativoAtivoMaisQuePerfeito");
+        morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoAtivoMaisQuePerfeito"});
 				break;
       case "fupia":
-        morfologiasSelecionadas.push("indicativoAtivoFuturoPerfeito");
+        morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoAtivoFuturoPerfeito"});
 				break;
       case "futia":
-				morfologiasSelecionadas.push("indicativoAtivoFuturo");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoAtivoFuturo"});
 				break;
 
       case "presa":
-				morfologiasSelecionadas.push("subjuntivoAtivoPresente");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoAtivoPresente"});
 				break;
       case "impsa":
-				morfologiasSelecionadas.push("subjuntivoAtivoImperfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoAtivoImperfeito"});
 				break;
       case "persa":
-				morfologiasSelecionadas.push("subjuntivoAtivoPerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoAtivoPerfeito"});
 				break;
       case "mqpsa":
-				morfologiasSelecionadas.push("subjuntivoAtivoMaisQuePerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoAtivoMaisQuePerfeito"});
 				break;
 
       case "preip":
-				morfologiasSelecionadas.push("indicativoPassivoPresente");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoPassivoPresente"});
 				break;
       case "impip":
-				morfologiasSelecionadas.push("indicativoPassivoImperfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoPassivoImperfeito"});
 				break;
       case "perip":
-				morfologiasSelecionadas.push("indicativoPassivoPerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoPassivoPerfeito"});
 				break;
       case "mqpip":
-				morfologiasSelecionadas.push("indicativoPassivoMaisQuePerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoPassivoMaisQuePerfeito"});
 				break;
       case "fupip":
-				morfologiasSelecionadas.push("indicativoPassivoFuturoPerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoPassivoFuturoPerfeito"});
 				break;
       case "futip":
-				morfologiasSelecionadas.push("indicativoPassivoFuturo");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"indicativoPassivoFuturo"});
 				break;
 
       case "presp":
-				morfologiasSelecionadas.push("subjuntivoPassivoPresente");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoPassivoPresente"});
 				break;
       case "impsp":
-				morfologiasSelecionadas.push("subjuntivoPassivoImperfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoPassivoImperfeito"});
 				break;
       case "persp":
-				morfologiasSelecionadas.push("subjuntivoPassivoPerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoPassivoPerfeito"});
 				break;
       case "mqpsp":
-				morfologiasSelecionadas.push("subjuntivoPassivoMaisQuePerfeito");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:"subjuntivoPassivoMaisQuePerfeito"});
 				break;
 
       case "infin":
-				morfologiasSelecionadas.push("infinitivo");
+				morfologiasRequisitaveis.push({gui:"infinitivo",stringRequisitavel:"infinitivo"});
 				break;
       case "parti":
-				morfologiasSelecionadas.push("participio");
+				morfologiasRequisitaveis.push({gui:"participio",stringRequisitavel:"participio"});
 				break;
       case "supin":
-				morfologiasSelecionadas.push("supino");
+				morfologiasRequisitaveis.push({gui:"supino",stringRequisitavel:"supino"});
 				break;
       case "imper":
-				morfologiasSelecionadas.push("imperativo");
+				morfologiasRequisitaveis.push({gui:"imperativo",stringRequisitavel:"imperativo"});
 				break;
       case "gerun":
-				morfologiasSelecionadas.push("gerundio");
+				morfologiasRequisitaveis.push({gui:"gerundioGerundivo",stringRequisitavel:"gerundio"});
 				break;
       default:
-				morfologiasSelecionadas.push("");
+				morfologiasRequisitaveis.push({gui:"pessoais",stringRequisitavel:""});
         break;
     }
   }

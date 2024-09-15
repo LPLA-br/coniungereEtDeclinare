@@ -1,15 +1,14 @@
-import Casos from "../constants/Casos";
 import axios from "axios";
+import { Pessoais } from "../constants/gui";
 
-/** Recebe infinitivo ativo identificador do verbo
- *  e o identificador modo+voz documentado em:
- *  https://github.com/LPLA-br/coniungereEtDeclinare-server/wiki/Documentacao-geral#verbos
+/** Retorna objeto abstrato ou undefined
+ *  re-adaptado para consulta generica em verbos.
 * */
-const obterConjugacaoCorreta = async ( infinitivo:string, modoVoz: string ): Promise<Casos | undefined> =>
+const obterConjugacaoCorreta = async ( infinitivo:string, recursoDinamico: string ): Promise<Pessoais | undefined> =>
 {
   try
   {
-    const substantivo = await axios.get( encodeURI( `http://127.0.0.1:8080/verbos/${modoVoz}?infinitivo=${infinitivo}`));
+    const substantivo = await axios.get( encodeURI( `http://127.0.0.1:8080/verbos/${recursoDinamico}?infinitivo=${infinitivo}`));
 
     if ( typeof substantivo == "object" )
     {
