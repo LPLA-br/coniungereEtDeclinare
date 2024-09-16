@@ -6,6 +6,12 @@
 type Gui = "pessoais" | "infinitivo" |
   "imperativo" | "participio" | "gerundioGerundivo" | "supino";
 
+type GuiData =
+{
+  gui:Gui,
+  stringRequisitavel:string
+};
+
 type Pessoais = 
 {
   pri_sing: string,
@@ -47,4 +53,4 @@ type Supino =
   supinoII: string
 };
 
-export { Gui, Pessoais, Infinitivo, Imperativo, GerundioGerundivo, Supino };
+export { Gui, GuiData, Pessoais, Infinitivo, Imperativo, GerundioGerundivo, Supino };

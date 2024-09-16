@@ -7,6 +7,9 @@ import BotaoApp from '@/src/components/BotaoApp';
 import obterIndexPalavras from '@/src/hooks/obterIndexPalavras';
 import renderizarVerbosPorDeVozAtiva from '@/src/components/dinamicos/renderizarVerbosDeVozAtiva';
 
+import estiloListaVerbos from '@/src/styles/componentes/conjugacaoVerbosLista';
+import estiloBotoes from '@/src/styles/componentes/botoes';
+
 /** Tela de conjugação com elementos internos
  *  dinâmicos.
  * */
@@ -22,6 +25,7 @@ export default function Conjugacao()
     {
       const resposta = await obterIndexPalavras( "http://127.0.0.1:8080/verbos/infinitivos" );
       setDados( resposta );
+      setVerboAlvo( "escolha verbo para conjugar abaixo" );
     })();
   },
   []);
@@ -30,10 +34,10 @@ export default function Conjugacao()
     <View>
       <View>
         <Stack.Screen options={{title:"CONIUNGERE"}} />
-        <Text> {verboAlvo?.toUpperCase()} </Text>
+        <Text  style={estiloListaVerbos.substantivoDefinido}> {verboAlvo?.toUpperCase()} </Text>
 
         <Text> REGULARES </Text>
-        <View id='listaVerbos'>
+        <View id='listaVerbos' style={estiloListaVerbos.renderizacaoDinamica}>
           {renderizarVerbosPorDeVozAtiva(dados,setVerboAlvo)}
         </View>
 
@@ -43,7 +47,7 @@ export default function Conjugacao()
 
         <Text> DEFECTIVOS </Text>
 
-        <View>
+        <View styles={estiloBotoes.botaoAcao}>
           <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
         </View>
       </View>

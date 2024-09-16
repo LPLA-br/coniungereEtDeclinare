@@ -7,13 +7,14 @@ import { ReactNode } from "react";
 import estiloConjugacao from "../styles/componentes/conjugacao";
 
 import VerbObj from "../constants/VerbObj";
-import { Gui, Pessoais } from "../constants/gui";
+import { Gui, GuiData, Pessoais } from "../constants/gui";
 
 import converterSelecionadosParaListaChavesDeVerbObj from "../hooks/converterSelecionadosParaListaChavesDeVerbObj";
 import traduzirChaveVerbObjParaStringRequisitavel from "../hooks/traduzirChaveVerbObjParaStringRequisitavel";
 import aferirVerboDeGuiPessoal from "../hooks/aferirSubParteVerbal";
 
 import BotaoApp from "./BotaoApp";
+import renderizarMorfologiaCorreta from "./dinamicos/renderizarMorfologiaCorreta";
 
 type LocalProps =
 {
@@ -21,17 +22,15 @@ type LocalProps =
   infinitivo: string
 };
 
-/** 
-*   Representa uma área de seis entradas
-*   de texto para para cada tempo verbal.
-*   Algumas telas podem ter mais de um deste.
-*   Requer o campo "tempo" em suas propriedades.
+/** Componente metamorficamente complexo
+*   de entradas de texto para exercícios de verbos.
 * */
 export default function Conjugar( props: LocalProps )
 {
   //pilha de resultados por modo.tempo
   const [ resultados, setResultados ] = useState<string[]>([]);
 
+  //pessoais
   const [ pps, setPps ] = useState<string>("");
   const [ sps, setSps ] = useState<string>("");
   const [ tps, setTps ] = useState<string>("");
@@ -39,21 +38,13 @@ export default function Conjugar( props: LocalProps )
   const [ spp, setSpp ] = useState<string>("");
   const [ tpp, setTpp ] = useState<string>("");
 
-  const [ gui, setGui ] = useState<{gui:Gui,stringRequisitavel:string}[]>([]);
-  const [ guiCorrente, setGuiCorrente ] = useState<ReactNode>((<></>));
+  //infinitivo
+  const [ iafut, setIafut ] = useState<string>("");
+  const [ iapre, setIapre ] = useState<string>("");
+  const [ iaper, setIaper ] = useState<string>("");
 
-  useEffect(()=>{
-    (async ()=>
-    {
-      let selecionados: String[] = converterSelecionadosParaListaChavesDeVerbObj( props.conf );
-      let selecionadosRequisitaveis: {gui:Gui,stringRequisitavel:string}[] = traduzirChaveVerbObjParaStringRequisitavel( selecionados );
-      setGui( selecionadosRequisitaveis );
-      //fila carregada ! incipiando ab initio !
-      const nodoInicial = gui.pop();
-      setGui( [...gui] );
-      setGuiCorrente( (nodoInicial?.gui == "pessoais")?(pessoais):(<></>) );
-    })();
-  },[]);
+  const [ gui, setGui ] = useState<GuiData[]>([]);
+  const [ guiCorrente, setGuiCorrente ] = useState<ReactNode>((<></>));
 
   const pessoais = (
       <View style={estiloConjugacao.inputs}>
@@ -73,14 +64,27 @@ export default function Conjugar( props: LocalProps )
     </View>
   );
 
+  useEffect(()=>{
+    (async ()=>
+    {
+      let selecionados: String[] = converterSelecionadosParaListaChavesDeVerbObj( props.conf );
+      let selecionadosRequisitaveis: GuiData[] = traduzirChaveVerbObjParaStringRequisitavel( selecionados );
+      setGui( selecionadosRequisitaveis );
+      //fila carregada ! incipiando ab initio !
+      const nodoInicial = gui.pop();
+      setGui( [...gui] );
+      setGuiCorrente( renderizarMorfologiaCorreta( nodoInicial, [pessoais, infinitivo] ) );
+    })();
+  },[]);
+
   return (
     <View>
       <Text> {props.infinitivo} </Text>
       <Text> { "VozModoTempo" } </Text>
-      (guiCorrente)
+      {guiCorrente}
       <BotaoApp tipo="avaliacao" titulo="AVANÇAR" funcao={()=>
       {
-        //descarregando gui. Renderizando cada através de guiCorrente.
+        //proxima renderização ...
         const entrada: Pessoais = {
           pri_sing: pps, seg_sing: sps, ter_sing: tps,
           pri_plur: ppp, seg_plur: spp, ter_plur: tpp

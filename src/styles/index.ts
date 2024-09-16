@@ -16,12 +16,6 @@ const estiloTelaInicial = StyleSheet.create(
     alignContent: 'space-between',
     flexWrap: 'nowrap',
   },
-  botao:
-  {
-    backgroundColor: '#a0a0a0',
-    borderColor: 'black',
-    borderWidth: 1
-  },
   exibirBorda:
   {
     borderColor: 'green',

@@ -5,7 +5,12 @@ const estiloDeclinacoes = StyleSheet.create(
     singPlur:
     {
       display: 'flex',
-      flexDirection: 'row'
+      flexDirection: 'row',
+      justifyContent: "space-between",
+    },
+    entradas:
+    {
+      margin: 10
     }
   }
 );

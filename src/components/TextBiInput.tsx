@@ -27,12 +27,14 @@ export default function TextBiInput( props: LocalProps )
 
         <TextInput
           id={props.campoa}
+          style={[estiloTextBiInput.entradasTextoIndividuais]}
           placeholder={props.campoa}
           onChangeText={ novoTexto => props.settera( novoTexto ) }
         ></TextInput>
 
         <TextInput
           id={props.campob}
+          style={[estiloTextBiInput.entradasTextoIndividuais]}
           placeholder={props.campob}
           onChangeText={ novoTexto => props.setterb( novoTexto ) }
         ></TextInput>

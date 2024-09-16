@@ -73,18 +73,20 @@ export default function Declinar( props: LocalProps )
             <Text> PLURAL </Text>
           </View>
 
-          {
-            ( modoExibicao == false ?
-              (
-                ( typeof props.ordenacao != "undefined") ?
-                ( (props.ordenacao == "linhares") ? LINHARES : ORBERG ) :
-                (<Text> FALHA: propriedade props.ordenacao: string não fornecida. </Text>)
-              ) :
-              (
-                <Text> {resultado} </Text>
+          <View style={estiloDeclinacoes.entradas}>
+            {
+              ( modoExibicao == false ?
+                (
+                  ( typeof props.ordenacao != "undefined") ?
+                  ( (props.ordenacao == "linhares") ? LINHARES : ORBERG ) :
+                  (<Text> FALHA: propriedade props.ordenacao: string não fornecida. </Text>)
+                ) :
+                (
+                  <Text> {resultado} </Text>
+                )
               )
-            )
-          }
+            }
+          </View>
 
           <Dialog overlayStyle={{backgroundColor:"#ffffff"}} isVisible={aviso} onBackdropPress={ ()=>{setAviso(!aviso)} } >
             <Text> Certifica-te de que preencheste todos os campos ! </Text>
