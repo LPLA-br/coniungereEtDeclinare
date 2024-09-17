@@ -33,7 +33,7 @@ export default function ExercicioConjugacao()
             ( <ConfiguracaoConjugacao/> ):
             (
               <>
-                <Conjugar conf={conf} infinitivo="legere"/>
+                <Conjugar conf={conf} infinitivo={ (typeof local.verbo == "string" ? local.verbo : "Falha: duplo titulo fornecido") }/>
                 <BotaoApp tipo="avaliacao" titulo="CONSOLE LOG" funcao={()=>{console.log(conf);}} />
               </>
             )

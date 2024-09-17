@@ -1,13 +1,13 @@
-import Gui from "../constants/gui";
+import { GuiData } from "../constants/gui";
 
 /** recebe lista de chaves de VerbObj que foram
  *  definidas como true e retorna lista de strings
  *  requisitáveis para o servidor e qual renderização
  *  é adequada.
 * */
-const traduzirChaveVerbObjParaStringRequisitavel = ( morfologiasSelecionadas :String[] ): {gui:Gui,stringRequisitavel:string}[] =>
+const traduzirChaveVerbObjParaStringRequisitavel = ( morfologiasSelecionadas :String[] ): GuiData[] =>
 {
-  let morfologiasRequisitaveis: {gui:Gui,stringRequisitavel:string}[] = [];
+  let morfologiasRequisitaveis: GuiData[] = [];
 
   for ( let i = 0; i < morfologiasSelecionadas.length; i++ )
   {

@@ -14,7 +14,7 @@ const converterSelecionadosParaListaChavesDeVerbObj = ( conf: VerbObj ): String[
   for ( let i = 0; i < chavesObjecto.length; i++ )
   {
     //FORÇAR INDEXAÇÃO !
-    if ( conf[chavesObjecto[i]] == true )
+    if ( conf[chavesObjecto[i]] === true )
     {
       morfologiasSelecionadas.push( chavesObjecto[i] );
     }

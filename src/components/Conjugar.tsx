@@ -43,18 +43,21 @@ export default function Conjugar( props: LocalProps )
   const [ iapre, setIapre ] = useState<string>("");
   const [ iaper, setIaper ] = useState<string>("");
 
-  const [ gui, setGui ] = useState<GuiData[]>([]);
+  const [ gui, setGui ] = useState<GuiData[]>([{gui:"pessoais",stringRequisitavel:"indicativoAtivoFuturo"}]);
   const [ guiCorrente, setGuiCorrente ] = useState<ReactNode>((<></>));
 
   const pessoais = (
-      <View style={estiloConjugacao.inputs}>
-        <TextInput id="pps" placeholder="primeira pessoa do singular" onChangeText={novoTexto => setPps( novoTexto )}></TextInput>
-        <TextInput id="sps" placeholder="segunda pessoa do singular" onChangeText={novoTexto => setSps( novoTexto )}></TextInput>
-        <TextInput id="tps" placeholder="terceira pessoa do singular" onChangeText={novoTexto => setTps( novoTexto )}></TextInput>
-
-        <TextInput id="ppp" placeholder="primeira pessoa do plural" onChangeText={novoTexto => setPpp( novoTexto )}></TextInput>
-        <TextInput id="spp" placeholder="segunda pessoa do plural" onChangeText={novoTexto => setSpp( novoTexto )}></TextInput>
-        <TextInput id="tpp" placeholder="terceira pessoa do plural" onChangeText={novoTexto => setTpp( novoTexto )}></TextInput>
+      <View style={estiloConjugacao.campo}>
+        <View style={estiloConjugacao.numero}>
+          <TextInput id="pps" style={estiloConjugacao.entrada} placeholder="primeira pessoa do singular" onChangeText={novoTexto => setPps( novoTexto )}></TextInput>
+          <TextInput id="sps" style={estiloConjugacao.entrada} placeholder="segunda pessoa do singular" onChangeText={novoTexto => setSps( novoTexto )}></TextInput>
+          <TextInput id="tps" style={estiloConjugacao.entrada} placeholder="terceira pessoa do singular" onChangeText={novoTexto => setTps( novoTexto )}></TextInput>
+        </View>
+        <View style={estiloConjugacao.numero}>
+          <TextInput id="ppp" style={estiloConjugacao.entrada} placeholder="primeira pessoa do plural" onChangeText={novoTexto => setPpp( novoTexto )}></TextInput>
+          <TextInput id="spp" style={estiloConjugacao.entrada} placeholder="segunda pessoa do plural" onChangeText={novoTexto => setSpp( novoTexto )}></TextInput>
+          <TextInput id="tpp" style={estiloConjugacao.entrada} placeholder="terceira pessoa do plural" onChangeText={novoTexto => setTpp( novoTexto )}></TextInput>
+        </View>
       </View>
   );
 
@@ -64,43 +67,47 @@ export default function Conjugar( props: LocalProps )
     </View>
   );
 
-  useEffect(()=>{
-    (async ()=>
-    {
-      let selecionados: String[] = converterSelecionadosParaListaChavesDeVerbObj( props.conf );
-      let selecionadosRequisitaveis: GuiData[] = traduzirChaveVerbObjParaStringRequisitavel( selecionados );
-      setGui( selecionadosRequisitaveis );
-      //fila carregada ! incipiando ab initio !
-      const nodoInicial = gui.pop();
-      setGui( [...gui] );
-      setGuiCorrente( renderizarMorfologiaCorreta( nodoInicial, [pessoais, infinitivo] ) );
-    })();
-  },[]);
-
   return (
     <View>
-      <Text> {props.infinitivo} </Text>
-      <Text> { "VozModoTempo" } </Text>
-      {guiCorrente}
+      <Text> { gui[gui.length-1]?.gui } </Text>
+      {
+        guiCorrente
+      }
       <BotaoApp tipo="avaliacao" titulo="AVANÇAR" funcao={()=>
       {
-        //proxima renderização ...
+        if ( gui.length === 0 )
+        {
+          //INIT
+          let selecionados: String[] = converterSelecionadosParaListaChavesDeVerbObj( props.conf );
+          let selecionadosRequisitaveis: GuiData[] = traduzirChaveVerbObjParaStringRequisitavel( selecionados );
+          setGui( selecionadosRequisitaveis );
+          console.log(gui);
+          const nodoInicial = gui.pop();
+          setGui( [...gui] );
+          setGuiCorrente( renderizarMorfologiaCorreta( nodoInicial, [pessoais, infinitivo] ) );
+          return;
+        }
+
+        //EXTRAÇÃO DE DADOS
         const entrada: Pessoais = {
           pri_sing: pps, seg_sing: sps, ter_sing: tps,
           pri_plur: ppp, seg_plur: spp, ter_plur: tpp
         };
+
+        //RENDERIZAÇÃO DESENFILEIRANTE.
         const nodo = gui.pop();
         setGui( [...gui] );
 
-        if ( nodo?.gui == "pessoais" )
+        if ( nodo?.gui === "pessoais" )
         {
           setGuiCorrente( pessoais );
         }
         else
         {
-          setGuiCorrente( (<></>) );
+          setGuiCorrente( (<Text>gui corrente NULL</Text>) );
         }
 
+        //AFERIÇÃO DE RESULTADOS
         if ( typeof nodo?.stringRequisitavel != "undefined" )
         {
           aferirVerboDeGuiPessoal( entrada, props.infinitivo, nodo?.stringRequisitavel, setResultados, resultados );

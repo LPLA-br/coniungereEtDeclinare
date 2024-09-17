@@ -10,6 +10,8 @@ import renderizarSubstantivoPorSuaDeclinacao from '@/src/components/dinamicos/re
 import estiloListaSubstantivos from '@/src/styles/componentes/declinacaoSubstantivosLista';
 import estiloBotoes from '@/src/styles/componentes/botoes';
 
+import server from '@/src/constants/Server';
+
 /** Tela de declinação.
  *  Contém lista de substantivos disponíveis
  *  para declinação fornecidos por consulta
@@ -25,7 +27,7 @@ export default function Declinacao()
   {
     (async ()=>
     {
-      const resposta = await obterIndexPalavras("http://127.0.0.1:8080/nome/substantivos" );
+      const resposta = await obterIndexPalavras( `${server}/nome/substantivos` );
       setDados(resposta);
       setSubstantivoAlvo("seleciona substantivo abaixo");
     })();

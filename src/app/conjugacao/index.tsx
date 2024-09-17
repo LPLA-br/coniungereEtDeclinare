@@ -10,6 +10,8 @@ import renderizarVerbosPorDeVozAtiva from '@/src/components/dinamicos/renderizar
 import estiloListaVerbos from '@/src/styles/componentes/conjugacaoVerbosLista';
 import estiloBotoes from '@/src/styles/componentes/botoes';
 
+import server from '@/src/constants/Server';
+
 /** Tela de conjugação com elementos internos
  *  dinâmicos.
  * */
@@ -23,7 +25,7 @@ export default function Conjugacao()
   {
     (async () =>
     {
-      const resposta = await obterIndexPalavras( "http://127.0.0.1:8080/verbos/infinitivos" );
+      const resposta = await obterIndexPalavras( `${server}/verbos/infinitivos` );
       setDados( resposta );
       setVerboAlvo( "escolha verbo para conjugar abaixo" );
     })();
