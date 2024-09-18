@@ -1,20 +1,22 @@
 /* LPLA-br 21/03/2024 */
 import React from "react";
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, Button } from 'react-native';
 import { useState, useEffect } from "react";
 import { ReactNode } from "react";
 
 import estiloConjugacao from "../styles/componentes/conjugacao";
 
 import VerbObj from "../constants/VerbObj";
-import { Gui, GuiData, Pessoais } from "../constants/gui";
+import {GuiData} from "../constants/gui";
 
+import BotaoApp from "./BotaoApp";
+import VerbResView from "./VerbResView";
+
+//import avancarConjugacao from "../hooks/avancarConjugacao";
 import converterSelecionadosParaListaChavesDeVerbObj from "../hooks/converterSelecionadosParaListaChavesDeVerbObj";
 import traduzirChaveVerbObjParaStringRequisitavel from "../hooks/traduzirChaveVerbObjParaStringRequisitavel";
 import aferirVerboDeGuiPessoal from "../hooks/aferirSubParteVerbal";
-
-import BotaoApp from "./BotaoApp";
-import renderizarMorfologiaCorreta from "./dinamicos/renderizarMorfologiaCorreta";
+import { cls } from "../hooks/cls";
 
 type LocalProps =
 {
@@ -38,13 +40,12 @@ export default function Conjugar( props: LocalProps )
   const [ spp, setSpp ] = useState<string>("");
   const [ tpp, setTpp ] = useState<string>("");
 
-  //infinitivo
+  /*infinitivo
   const [ iafut, setIafut ] = useState<string>("");
   const [ iapre, setIapre ] = useState<string>("");
-  const [ iaper, setIaper ] = useState<string>("");
+  const [ iaper, setIaper ] = useState<string>("");*/
 
-  const [ gui, setGui ] = useState<GuiData[]>([{gui:"pessoais",stringRequisitavel:"indicativoAtivoFuturo"}]);
-  const [ guiCorrente, setGuiCorrente ] = useState<ReactNode>((<></>));
+  const [ gui, setGui ] = useState<GuiData[]>([]);
 
   const pessoais = (
       <View style={estiloConjugacao.campo}>
@@ -67,51 +68,52 @@ export default function Conjugar( props: LocalProps )
     </View>
   );
 
+  useEffect(()=>{
+    const componentes = { pessoais: pessoais, infinitivo: infinitivo };
+    const dados = traduzirChaveVerbObjParaStringRequisitavel(converterSelecionadosParaListaChavesDeVerbObj( props.conf ), componentes );
+    setGui( dados );
+  },
+  []);
+
+  useEffect(()=>{
+    console.log(gui);
+  },[gui]);
+
   return (
     <View>
-      <Text> { gui[gui.length-1]?.gui } </Text>
+      <Text>
       {
-        guiCorrente
+        ( gui.length > 0 )?
+        ( gui[ gui.length - 1 ].stringRequisitavel ?? "undefined" ):
+        ( <Text>FIM DO EXERCÍCIO</Text> )
       }
-      <BotaoApp tipo="avaliacao" titulo="AVANÇAR" funcao={()=>
+      </Text>
       {
-        if ( gui.length === 0 )
-        {
-          //INIT
-          let selecionados: String[] = converterSelecionadosParaListaChavesDeVerbObj( props.conf );
-          let selecionadosRequisitaveis: GuiData[] = traduzirChaveVerbObjParaStringRequisitavel( selecionados );
-          setGui( selecionadosRequisitaveis );
-          console.log(gui);
-          const nodoInicial = gui.pop();
-          setGui( [...gui] );
-          setGuiCorrente( renderizarMorfologiaCorreta( nodoInicial, [pessoais, infinitivo] ) );
-          return;
-        }
-
-        //EXTRAÇÃO DE DADOS
-        const entrada: Pessoais = {
-          pri_sing: pps, seg_sing: sps, ter_sing: tps,
-          pri_plur: ppp, seg_plur: spp, ter_plur: tpp
-        };
-
-        //RENDERIZAÇÃO DESENFILEIRANTE.
-        const nodo = gui.pop();
+        ( gui.length > 0 )?
+        ( gui[ gui.length - 1 ].renderizacao ?? "undefined" ):
+        ( <VerbResView resultados={resultados}/> )
+      }
+      <BotaoApp tipo="avaliacao" titulo="AVANÇAR" funcao={()=>{
+        if ( gui.length == 0 ) return;
+        gui.pop();
         setGui( [...gui] );
-
-        if ( nodo?.gui === "pessoais" )
+        (async ()=>
         {
-          setGuiCorrente( pessoais );
-        }
-        else
-        {
-          setGuiCorrente( (<Text>gui corrente NULL</Text>) );
-        }
-
-        //AFERIÇÃO DE RESULTADOS
-        if ( typeof nodo?.stringRequisitavel != "undefined" )
-        {
-          aferirVerboDeGuiPessoal( entrada, props.infinitivo, nodo?.stringRequisitavel, setResultados, resultados );
-        }
+          let str = ( gui.length > 1 )?
+          (gui[ gui.length - 1 ].stringRequisitavel ?? "undefined"):
+          ("undefined");
+          
+          if ( typeof str === "string" )
+          {
+            await aferirVerboDeGuiPessoal( { pri_sing:pps, seg_sing:sps, ter_sing:tps, pri_plur:ppp, seg_plur:spp, ter_plur:tpp }, props.infinitivo, str, setResultados, resultados );
+          }
+          try{
+          }
+          catch( err )
+          {
+            setResultados(["OPS! Avaliação de resultados falhou"]);
+          }
+        })();
       }} />
     </View>
   );

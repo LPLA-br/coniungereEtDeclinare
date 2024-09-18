@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 
 /** Indica tipos de interface
  *  para renderização de verbos e
@@ -6,10 +7,22 @@
 type Gui = "pessoais" | "infinitivo" |
   "imperativo" | "participio" | "gerundioGerundivo" | "supino";
 
+// grupo de elementos renderizáveis
+type ReactNodeConiungere =
+{
+  "pessoais"?: ReactNode,
+  "infinitivo"?: ReactNode, 
+  "imperativo"?: ReactNode,
+  "participio"?: ReactNode,
+  "gerundioGerundivo"?: ReactNode,
+  "supino"?: ReactNode
+};
+
 type GuiData =
 {
-  gui:Gui,
-  stringRequisitavel:string
+  gui:Gui, //campo obsoleto
+  stringRequisitavel:string,
+  renderizacao: ReactNode
 };
 
 type Pessoais = 
@@ -53,4 +66,4 @@ type Supino =
   supinoII: string
 };
 
-export { Gui, GuiData, Pessoais, Infinitivo, Imperativo, GerundioGerundivo, Supino };
+export { Gui, GuiData, ReactNodeConiungere, Pessoais, Infinitivo, Imperativo, GerundioGerundivo, Supino };

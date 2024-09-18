@@ -2,8 +2,6 @@ import { View, Text, ScrollView } from "react-native";
 import { useLocalSearchParams, Stack } from "expo-router";
 import { useState, createContext } from "react";
 
-import BotaoApp from "@/src/components/BotaoApp";
-
 import ConfiguracaoConjugacao from "@/src/components/ConfiguracaoConjugacao";
 import VerbObj from "@/src/constants/VerbObj";
 import Conjugar from "@/src/components/Conjugar";
@@ -32,10 +30,7 @@ export default function ExercicioConjugacao()
             ( typeof conf === "undefined" )?
             ( <ConfiguracaoConjugacao/> ):
             (
-              <>
-                <Conjugar conf={conf} infinitivo={ (typeof local.verbo == "string" ? local.verbo : "Falha: duplo titulo fornecido") }/>
-                <BotaoApp tipo="avaliacao" titulo="CONSOLE LOG" funcao={()=>{console.log(conf);}} />
-              </>
+              <Conjugar conf={conf} infinitivo={ (typeof local.verbo == "string" ? local.verbo : "Falha: duplo titulo fornecido") }/>
             )
           }
         </ConfContext.Provider>

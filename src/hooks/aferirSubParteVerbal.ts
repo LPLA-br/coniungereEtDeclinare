@@ -31,7 +31,7 @@ const aferirVerboDeGuiPessoal = async ( entrada: Pessoais ,infinitivo: string,
   }
   else
   {
-    resultadosSetter( "OPS: aferição de resultados falhou para " + stringRequisitavel );
+    resultadosSetter( ["OPS: aferição de resultados falhou para " + stringRequisitavel] );
   }
 
 };
