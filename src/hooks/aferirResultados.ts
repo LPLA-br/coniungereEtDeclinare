@@ -1,6 +1,7 @@
 import Casos from "../constants/Casos";
 import inputsPreenchidos from "./inputsPreenchidos";
 import traduzirChaveParaPalavra from "./traduzirChaveParaPalavra";
+import eliminarMacrons from "./eliminarMacrons";
 
 /** Avalia correção do exercício.
 *   Recebe entrada do usuário e
@@ -30,13 +31,13 @@ const aferirResultados = async ( entradaUsuario: Casos, substantivoCorreto: Caso
 
         resultado = resultado.concat( Object.keys(entradaUsuario).map( (chave)=>
           {
-            if( entradaUsuario[ chave ] === substantivo[ chave ] )
+            if( entradaUsuario[ chave ] === eliminarMacrons(substantivo[ chave ]) )
             {
-              return ( `${traduzirChaveParaPalavra(chave)} ${entradaUsuario[chave]} = ${substantivo[chave]} ACERTASTE\n` );
+              return ( `${traduzirChaveParaPalavra(chave)} ${entradaUsuario[chave]} = ${eliminarMacrons(substantivo[ chave ])} ACERTASTE\n` );
             }
             else
             {
-              return ( `${traduzirChaveParaPalavra(chave)} ${entradaUsuario[chave]} → ${substantivo[chave]} ERRASTE\n` );
+              return ( `${traduzirChaveParaPalavra(chave)} ${entradaUsuario[chave]} ≠ ${eliminarMacrons(substantivo[ chave ])} ERRASTE\n` );
             }
           })
         );

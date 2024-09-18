@@ -2,6 +2,7 @@
 import React from "react";
 import { Text, Pressable } from 'react-native';
 import { Link } from "expo-router";
+import gerarIdRandomico from "../hooks/gerarIdRandomico";
 
 import estiloBotoes from "../styles/componentes/botoes";
 
@@ -38,7 +39,7 @@ export default function BotaoApp( props: LocalProps )
     {
       // execução de funções
       return (
-        <Pressable id={props.titulo} style={estiloBotoes.botao} onPress={props.funcao()} >
+        <Pressable key={gerarIdRandomico(10)} id={props.titulo} style={estiloBotoes.botao} onPress={props.funcao()} >
           <Text> {props.titulo} </Text>
         </Pressable>
       );
@@ -47,7 +48,7 @@ export default function BotaoApp( props: LocalProps )
     {
       //definicao de valores de useState() passado.
       return (
-        <Pressable id={props.titulo} style={estiloBotoes.botao} onPress={alterarValorUseStatePorTitulo} >
+        <Pressable key={gerarIdRandomico(10)} id={props.titulo} style={estiloBotoes.botao} onPress={alterarValorUseStatePorTitulo} >
           <Text> {props.titulo} </Text>
         </Pressable>
       );
@@ -56,7 +57,7 @@ export default function BotaoApp( props: LocalProps )
     {
       //corrigido para onPress
       return (
-        <Pressable id={props.titulo} style={estiloBotoes.botao} onPress={props.funcao} >
+        <Pressable key={gerarIdRandomico(10)} id={props.titulo} style={estiloBotoes.botao} onPress={props.funcao} >
           <Text> {props.titulo} </Text>
         </Pressable>
       );
@@ -64,7 +65,7 @@ export default function BotaoApp( props: LocalProps )
     else
     {
       return (
-        <Pressable id={props.titulo} style={estiloBotoes.botao}  >
+        <Pressable key={gerarIdRandomico(10)} id={props.titulo} style={estiloBotoes.botao}  >
           <Text> {props.titulo} </Text>
         </Pressable>
       );
