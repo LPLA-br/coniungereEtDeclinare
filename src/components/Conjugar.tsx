@@ -1,8 +1,7 @@
 /* LPLA-br 21/03/2024 */
 import React from "react";
-import { View, Text, TextInput, Button } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { useState, useEffect } from "react";
-import { ReactNode } from "react";
 
 import estiloConjugacao from "../styles/componentes/conjugacao";
 
@@ -15,7 +14,8 @@ import VerbResView from "./VerbResView";
 //import avancarConjugacao from "../hooks/avancarConjugacao";
 import converterSelecionadosParaListaChavesDeVerbObj from "../hooks/converterSelecionadosParaListaChavesDeVerbObj";
 import traduzirChaveVerbObjParaStringRequisitavel from "../hooks/traduzirChaveVerbObjParaStringRequisitavel";
-import aferirVerboDeGuiPessoal from "../hooks/aferirSubParteVerbal";
+import aferirVerboDeGuiPessoal from "../hooks/aferirVerboDeGuiPessoal";
+import formatarTituloExercicioVerbal from "../hooks/formatarTituloExercicioVerbal";
 import { cls } from "../hooks/cls";
 
 type LocalProps =
@@ -81,40 +81,56 @@ export default function Conjugar( props: LocalProps )
 
   return (
     <View>
-      <Text>
-      {
-        ( gui.length > 0 )?
-        ( gui[ gui.length - 1 ].stringRequisitavel ?? "undefined" ):
-        ( <Text>FIM DO EXERCÍCIO</Text> )
-      }
-      </Text>
-      {
-        ( gui.length > 0 )?
-        ( gui[ gui.length - 1 ].renderizacao ?? "undefined" ):
-        ( <VerbResView resultados={resultados}/> )
-      }
-      <BotaoApp tipo="avaliacao" titulo="AVANÇAR" funcao={()=>{
-        if ( gui.length == 0 ) return;
-        gui.pop();
-        setGui( [...gui] );
-        (async ()=>
+      <View>
+        <Text style={estiloConjugacao.tituloFlexao}>
         {
-          let str = ( gui.length > 1 )?
-          (gui[ gui.length - 1 ].stringRequisitavel ?? "undefined"):
-          ("undefined");
-          
-          if ( typeof str === "string" )
-          {
-            await aferirVerboDeGuiPessoal( { pri_sing:pps, seg_sing:sps, ter_sing:tps, pri_plur:ppp, seg_plur:spp, ter_plur:tpp }, props.infinitivo, str, setResultados, resultados );
-          }
-          try{
-          }
-          catch( err )
-          {
-            setResultados(["OPS! Avaliação de resultados falhou"]);
-          }
-        })();
-      }} />
+          ( gui.length > 0 )?
+          ( formatarTituloExercicioVerbal( gui[ gui.length - 1 ].stringRequisitavel ) ):
+          ( <Text>FIM DO EXERCÍCIO</Text> )
+        }
+        </Text>
+        {
+          ( gui.length > 0 )?
+          ( gui[ gui.length - 1 ].renderizacao ):
+          ( <VerbResView resultados={resultados}/> )
+        }
+      </View>
+
+      {
+        ( gui.length != 0 )?
+        (
+            <BotaoApp tipo="avaliacao" titulo="AVANÇAR" funcao={()=>{
+              if ( gui.length === 0 ) return;
+              (async ()=>
+              {
+                let str = ( gui.length > 0 )?
+                (gui[ gui.length - 1 ].stringRequisitavel):
+                (undefined);
+                
+                if ( gui.length > 0 && typeof str === "string" )
+                {
+                  const avaliacaoCorrente = await aferirVerboDeGuiPessoal( { pri_sing:pps, seg_sing:sps, ter_sing:tps, pri_plur:ppp, seg_plur:spp, ter_plur:tpp },
+                                                                          props.infinitivo, str);
+                  if ( typeof avaliacaoCorrente != "string" )
+                  {
+                    console.log( avaliacaoCorrente );
+                  }
+                  else
+                  {
+                    resultados.push( avaliacaoCorrente );
+                    setResultados( resultados );    
+                  }
+                }
+              })();
+              gui.pop();
+              setGui( [...gui] );
+            }} />
+        ):
+        (
+          <BotaoApp titulo="ENCERRAR" tipo="navegacao" rumo="conjugacao/"/>
+        )
+      }
+      
     </View>
   );
 }

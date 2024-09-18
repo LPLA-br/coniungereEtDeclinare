@@ -22,7 +22,13 @@ const VerbResView = ( props: LocalType ): ReactNode =>
         (props.resultados[ posicao ])
       }
       </Text>
-      <BotaoApp titulo="proximo" tipo="avaliacao" funcao={()=>{if(posicao < props.resultados.length) setPosicao(posicao+1)}} />
+      <BotaoApp titulo="proximo" tipo="avaliacao" funcao={()=>{
+        if( posicao < props.resultados.length )
+        {
+          if ( posicao == (props.resultados.length-1) ) return;
+          setPosicao(posicao+1);
+        }
+      }} />
       <BotaoApp titulo="anterior" tipo="avaliacao" funcao={()=>{if(posicao > 0) setPosicao(posicao-1)}} />
     </View>
   );

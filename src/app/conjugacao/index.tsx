@@ -9,6 +9,7 @@ import renderizarVerbosPorDeVozAtiva from '@/src/components/dinamicos/renderizar
 
 import estiloListaVerbos from '@/src/styles/componentes/conjugacaoVerbosLista';
 import estiloBotoes from '@/src/styles/componentes/botoes';
+import estiloConjugacao from '@/src/styles/componentes/conjugacao';
 
 import server from '@/src/constants/Server';
 
@@ -33,7 +34,7 @@ export default function Conjugacao()
   []);
 
   return (
-    <View>
+    <View style={estiloConjugacao.segregacaoVertical}>
       <View>
         <Stack.Screen options={{title:"CONIUNGERE"}} />
         <Text  style={estiloListaVerbos.substantivoDefinido}> {verboAlvo?.toUpperCase()} </Text>
@@ -42,16 +43,12 @@ export default function Conjugacao()
         <View id='listaVerbos' style={estiloListaVerbos.renderizacaoDinamica}>
           {renderizarVerbosPorDeVozAtiva(dados,setVerboAlvo)}
         </View>
-
         <Text> ANÔMALOS </Text>
-
         <Text> DEPONENTES </Text>
-
         <Text> DEFECTIVOS </Text>
-
-        <View styles={estiloBotoes.botaoAcao}>
-          <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
-        </View>
+      </View>
+      <View styles={estiloBotoes.botaoAcao}>
+        <BotaoApp titulo='Conjugar' tipo="navegacao" rumo={ "/conjugacao/" + verboAlvo } />
       </View>
     </View>
   );

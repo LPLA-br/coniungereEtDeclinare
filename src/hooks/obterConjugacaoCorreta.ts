@@ -1,18 +1,21 @@
 import axios from "axios";
 import { Pessoais } from "../constants/gui";
+import server from "../constants/Server";
 
-/** Retorna objeto abstrato ou undefined
- *  re-adaptado para consulta generica em verbos.
+/** Retorna objeto poliforma ou undefined
+ *  consiste em uma re-implementação
+ *  especifica de obterConjugacaoCorreta().
+ *  desencapsula res de uma lista.
 * */
 const obterConjugacaoCorreta = async ( infinitivo:string, recursoDinamico: string ): Promise<Pessoais | undefined> =>
 {
   try
   {
-    const substantivo = await axios.get( encodeURI( `http://127.0.0.1:8080/verbos/${recursoDinamico}?infinitivo=${infinitivo}`));
+    const parteVerbo = await axios.get( encodeURI( `${server}/verbos/${recursoDinamico}?infinitivo=${infinitivo}`));
 
-    if ( typeof substantivo == "object" )
+    if ( typeof parteVerbo == "object" )
     {
-      return substantivo.data.res;
+      return parteVerbo.data.res[0];
     }
     else return undefined;
   }

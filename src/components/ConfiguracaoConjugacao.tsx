@@ -7,7 +7,8 @@ import { CheckBox, ListItem } from "@rneui/themed";
 import alterarEstadoCheckbox from "@/src/hooks/alterarEstadoCheckbox";
 
 import { ConfContext } from "../app/conjugacao/[verbo]";
-import VerbObj from "../constants/VerbObj";
+
+import estiloConjugacao from "../styles/componentes/conjugacao";
 
 export default function ConfiguracaoConjugacao()
 {
@@ -51,7 +52,7 @@ export default function ConfiguracaoConjugacao()
   const [ conf, setConf ] = useContext( ConfContext );
 
   return (
-  <>
+  <View style={estiloConjugacao.segregacaoVertical}>
    <Text> AEDIFICA TUA VIA: </Text>
       <ListItem.Accordion
         content={ <Text>MODO INDICATIVO DA VOZ ATIVA</Text> }
@@ -143,7 +144,7 @@ export default function ConfiguracaoConjugacao()
           gerun:gerun,
         });
       }} />
-  </>
+  </View>
   );
 }
 

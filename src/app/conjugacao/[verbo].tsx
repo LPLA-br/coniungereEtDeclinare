@@ -19,7 +19,7 @@ export default function ExercicioConjugacao()
   const [ conf, setConf ] = useState<VerbObj | undefined>(undefined);
 
   return (
-    <ScrollView>
+    <ScrollView style={{height:"100%"}}>
       <View>
         <Stack.Screen options={{ title: "CONIUNGERE" }}/>
         <View id="tituloVerbo">
