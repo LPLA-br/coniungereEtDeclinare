@@ -1,11 +1,12 @@
 import Casos from "../constants/Casos";
 import axios from "axios";
+import server from "../constants/Server";
 
 const obterDeclinacaoCorreta = async ( nominativoSingularSubstantivo: string ): Promise<Casos | undefined> =>
 {
   try
   {
-    const substantivo = await axios.get( encodeURI( `http://127.0.0.1:8080/nome/substantivo?noms=${nominativoSingularSubstantivo}`));
+    const substantivo = await axios.get( encodeURI( `${server}/nome/substantivo?noms=${nominativoSingularSubstantivo}`));
 
     if ( typeof substantivo == "object" )
     {
