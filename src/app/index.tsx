@@ -1,29 +1,19 @@
-import { View, Pressable, Text } from 'react-native';
-import { Link } from 'expo-router';
-import { estilos } from '../styles/index';
+import { View } from 'react-native';
+import { estiloTelaInicial } from '../styles/index';
+import { Stack } from 'expo-router';
 
-export default function Page()
+import BotaoApp from '../components/BotaoApp';
+
+export default function Home()
 {
   return (
       <View >
-        <View style={[estilos.container, estilos.exibirBorda]}>
-
-          <Link href={"/conjugacao"} style={estilos.botao}>
-            <Pressable>
-              <Text> Conjugar </Text>
-            </Pressable>
-          </Link>
-
-          <Link href={"/declinacao"} style={estilos.botao}>
-            <Pressable>
-              <Text> Declinar </Text>
-            </Pressable>
-          </Link>
-
-          <Pressable style={estilos.botao}>
-            <Text> Sair </Text>
-          </Pressable>
-        </View>
+        <Stack.Screen options={{title:"CONIUNGERE ET DECLINARE"}} />
+          <View style={[estiloTelaInicial.container, estiloTelaInicial.exibirBorda]}>
+            <BotaoApp titulo='Conjugar' tipo="navegacao" rumo="/conjugacao" />
+            <BotaoApp titulo='Declinar' tipo="navegacao" rumo="/declinacao" />
+            <BotaoApp titulo='Sair' tipo="navegacao" rumo="/" />
+          </View>
       </View>
   );
 }

@@ -1,18 +1,20 @@
 import './global.css';
-import { Slot } from 'expo-router';
-import Cabecalho from '../components/Cabecalho';
+import "@/src/app/global.css";
+import { Stack, Slot } from 'expo-router';
+
+//componente cabecalho descatado
 import Rodape from '../components/Rodape';
-import { SafeAreaView } from 'react-native';
+
+import Colors from '../constants/Colors';
 
 export default function HomeLayout()
 {
-  return (
-    <>
-      <SafeAreaView>
-        <Cabecalho className="cabecalho" texto={"CONIUNGERE ET DECLINARE"} />
+   return (
+     <>
+       <Stack screenOptions={{ headerStyle: { backgroundColor: Colors.Verde } }} >
         <Slot />
-        <Rodape className="rodape" />
-      </SafeAreaView>
-    </>
-  );
+       </Stack>
+       <Rodape />
+     </>
+   );
 }

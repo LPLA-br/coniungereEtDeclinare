@@ -1,19 +1,7 @@
-const tintColorLight = '#2f95dc';
-const tintColorDark = '#fff';
 
+/* paleta de cores do projeto JC */
 export default {
-  light: {
-    text: '#000',
-    background: '#fff',
-    tint: tintColorLight,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorLight,
-  },
-  dark: {
-    text: '#fff',
-    background: '#000',
-    tint: tintColorDark,
-    tabIconDefault: '#ccc',
-    tabIconSelected: tintColorDark,
-  },
+  Verde: "#008000",
+  Cinza: "#a0a0a0",
+  Branco: "#f2f2f2"
 };

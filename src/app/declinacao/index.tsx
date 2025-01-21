@@ -1,24 +1,59 @@
-/** Tela de partida para atividade de declinação
- *  1-escolher substantivo 2-declinar 3-aferir resultados
- *  LPLA-br 21/03/2024
- *
- * */
+import { Pressable, ScrollView, View, Text, FlatList } from 'react-native';
+import { useState, useEffect } from 'react';
+import { Link, Stack } from 'expo-router';
+import { ReactNode } from 'react';
 
-import { Pressable, View, Text } from 'react-native';
-import { Link } from 'expo-router';
-import Declinar from '../../components/declinacao/Declinar';
+import BotaoApp from '@/src/components/BotaoApp';
 
-/** Tela de declinação 
+import obterIndexPalavras from '@/src/hooks/obterIndexPalavras';
+import renderizarSubstantivoPorSuaDeclinacao from '@/src/components/dinamicos/renderizarSubstantivosPorDeclinacao';
+
+/** Tela de declinação.
+ *  Contém lista de substantivos disponíveis
+ *  para declinação fornecidos por consulta
+ *  sqlite.
  * */
 export default function Declinacao()
 {
+  const [ dados, setDados ] = useState<any[] | undefined>();
+  const [ substantivoAlvo, setSubstantivoAlvo ] = useState<string>();
+
+  useEffect(
+  () =>
+  {
+    (async ()=>
+    {
+      const resposta = await obterIndexPalavras("http://127.0.0.1:8080/nome/substantivos" );
+      setDados(resposta);
+    })();
+  },
+  []);
+
   return (
     <View>
-      <Text> Nada Até o momento </Text>
-      <Pressable>
-        <Link href={"/"}> voltar </Link>
-      </Pressable>
-      <Declinar/>
+      <Stack.Screen options={{title:"DECLINARE"}} />
+      <ScrollView>
+        <Text> { substantivoAlvo?.toUpperCase() } </Text>
+        <View>
+          <Text> DECLINAÇÃO I </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(1,dados,setSubstantivoAlvo)}
+          <Text> DECLINAÇÃO V </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(5,dados,setSubstantivoAlvo)}
+          <Text> DECLINAÇÃO II </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(2,dados,setSubstantivoAlvo)}
+          <Text> DECLINAÇÃO IV </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(4,dados,setSubstantivoAlvo)}
+          <Text> DECLINAÇÃO III </Text>
+          {renderizarSubstantivoPorSuaDeclinacao(3,dados,setSubstantivoAlvo)}
+        </View>
+
+        <View>
+          <BotaoApp titulo='Declinar' tipo="navegacao" rumo={ "declinacao/" + substantivoAlvo } />
+        </View>
+
+      </ScrollView>
     </View>
   );
 }
+
+
